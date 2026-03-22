@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root{
+    --primary: #0F172A;  /* Main background, Navbar, Hero section */
+    --secondary: #3b83f6; /* Titles, Important Headings, Highlights */
+    --tertiary: #111827;  /* Secondary Background */
+    --text: #94A3B8;    /* Paragraph, Descriptions, Secondary Text */
+    --border: #3b475a;   /* Cards, Input fields, Deviders */
+    --btn-primary: #117235;   /* Submit, Important Actions */
+    --btn-secondary: #334155;  /* Cancel, Secondary Actions */
+}
