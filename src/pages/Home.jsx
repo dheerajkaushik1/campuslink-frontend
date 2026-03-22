@@ -132,28 +132,28 @@ export default function Home() {
 
           <div className='bg-(--btn-secondary) md:h-40 md:w-[40%] py-10 rounded-lg flex flex-col justify-center items-center gap-5 px-7  hover:shadow-xl/50 shadow-red-500 transition-all duration-300'>
             <h2 className='text-2xl text-(--text) font-semibold self-start'>
-              📥 Easy Downloads
+              🔍 Smart Search
             </h2>
             <h2 className='text-2xl text-(--text) self-end'>
-              - Get notes instantly
+              - Find Fast
             </h2>
           </div>
 
           <div className='bg-(--btn-secondary) md:h-40 md:w-[40%] py-10 rounded-lg flex flex-col justify-center items-center gap-5 px-7  hover:shadow-xl/50 shadow-red-500 transition-all duration-300'>
             <h2 className='text-2xl text-(--text) font-semibold self-start'>
-              📥 Easy Downloads
+              🔒 Verified Users
             </h2>
             <h2 className='text-2xl text-(--text) self-end'>
-              - Get notes instantly
+              - Secure Access
             </h2>
           </div>
 
           <div className='bg-(--btn-secondary) md:h-40 md:w-[40%] py-10 rounded-lg flex flex-col justify-center items-center gap-5 px-7  hover:shadow-xl/50 shadow-red-500 transition-all duration-300'>
             <h2 className='text-2xl text-(--text) font-semibold self-start'>
-              📥 Easy Downloads
+              📚 Organized
             </h2>
             <h2 className='text-2xl text-(--text) self-end'>
-              - Get notes instantly
+              - Subject Wise Notes
             </h2>
           </div>
         </div>
