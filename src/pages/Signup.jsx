@@ -93,7 +93,7 @@ export default function Signup() {
                     
                 </div>
 
-                <div className="flex flex-col md:flex-row md:gap-5 md:w-[40%] w-full px-10 justify-around">
+                <div className="flex flex-col md:flex-row md:gap-5 md:w-[60%] w-full px-10 justify-around">
                     <button onClick={sendOTP} className="bg-(--secondary) px-5 py-2 rounded-2xl mt-5 hover:shadow-xl/30 shadow-white transition-all duration-400 text-white">
                         {loadingOTP ? "Sending OTP..." : "Send OTP"}
                     </button>
