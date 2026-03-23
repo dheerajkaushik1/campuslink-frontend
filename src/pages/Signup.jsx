@@ -49,7 +49,7 @@ export default function Signup() {
         try{
             setLoadingSignup(true);
             const res = await API.post('/auth/signup', { email, password, name });
-            alert(res.data.message);
+            alert("Account created successfully. Please login.");
             navigate('/login');
         } catch(err){
             alert("Error signing up");
