@@ -5,8 +5,8 @@ export default function Admin() {
     const [title, setTitle] = useState("");
     const [subject, setSubject] = useState("");
     const [description, setDescription] = useState("");
-    const [previewUrl, setPreviewUrl] = useState("");
-    const [downloadUrl, setDownloadUrl] = useState("");
+    const [previewUrl, setPreviewUrl] = useState("https://drive.google.com/file/d/........../preview");
+    const [downloadUrl, setDownloadUrl] = useState("https://drive.google.com/uc?export=download&id=");
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
@@ -45,8 +45,8 @@ export default function Admin() {
                 <input placeholder="Subject" onChange={(e) => setSubject(e.target.value)} className="border-2 rounded-lg p-3"/>
                 <input placeholder="Description" onChange={(e) => setDescription(e.target.value)} className="border-2 rounded-lg p-3"/>
 
-                <input type="text" placeholder="File Preview URL" onChange={(e) => setPreviewUrl(e.target.value)} className="border-2 rounded-lg p-3"/>
-                <input type="text" placeholder="File Download URL" onChange={(e) => setDownloadUrl(e.target.value)} className="border-2 rounded-lg p-3"/>
+                <input type="text" placeholder="File Preview URL" onChange={(e) => setPreviewUrl(e.target.value)} className="border-2 rounded-lg p-3" value={previewUrl}/>
+                <input type="text" placeholder="File Download URL" onChange={(e) => setDownloadUrl(e.target.value)} className="border-2 rounded-lg p-3" value={downloadUrl}/>
 
             </div>
 
