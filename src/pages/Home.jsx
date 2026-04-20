@@ -133,6 +133,12 @@ export default function Home() {
                 Browse All Notes
               </button>
               <button
+                onClick={() => navigate('/note-request')}
+                className="rounded-2xl bg-(--secondary) px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:brightness-110"
+              >
+                Request Notes
+              </button>
+              <button
                 onClick={() => navigate('/profile')}
                 className="rounded-2xl border border-white/10 bg-white/8 px-6 py-3 font-semibold text-slate-200 transition-all duration-300 hover:bg-white/12"
               >
@@ -286,6 +292,12 @@ export default function Home() {
             View Full Library
           </button>
           <button
+            onClick={() => navigate('/note-request')}
+            className="rounded-2xl bg-(--secondary) px-6 py-3 font-semibold text-white transition-all duration-300 hover:brightness-110"
+          >
+            Ask for a Note
+          </button>
+          <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="rounded-2xl border border-white/10 bg-white/6 px-6 py-3 font-semibold text-slate-200 transition-all duration-300 hover:bg-white/10"
           >
@@ -323,6 +335,12 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap gap-4">
+              <button
+                onClick={() => navigate('/note-request')}
+                className="rounded-2xl bg-(--secondary) px-6 py-3 font-semibold text-white transition-all duration-300 hover:brightness-110"
+              >
+                Request Missing Notes
+              </button>
               <button
                 onClick={() => navigate('/signup')}
                 className="rounded-2xl bg-(--secondary) px-6 py-3 font-semibold text-white transition-all duration-300 hover:brightness-110"

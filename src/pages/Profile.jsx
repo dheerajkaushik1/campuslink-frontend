@@ -63,22 +63,39 @@ export default function Profile() {
             buttonStyle: "bg-(--btn-primary) text-white hover:bg-green-800",
         },
         {
+            title: "Request Notes",
+            description: "Ask for a missing topic or subject and help shape the next uploads.",
+            action: () => navigate("/note-request"),
+            buttonLabel: "Open Request Page",
+            buttonStyle: "bg-(--secondary) text-white hover:brightness-110",
+        },
+        {
             title: "Return Home",
             description: "Jump back to the redesigned landing page and featured sections.",
             action: () => navigate("/"),
             buttonLabel: "Go Home",
-            buttonStyle: "bg-(--secondary) text-white hover:brightness-110",
-        },
-        {
-            title: "Admin Access",
-            description: isAdmin
-                ? "You can open the admin panel and upload fresh notes."
-                : "Admin tools are reserved for authorized accounts only.",
-            action: () => navigate(isAdmin ? "/admin" : "/notes"),
-            buttonLabel: isAdmin ? "Open Admin" : "View Notes",
             buttonStyle: "bg-(--btn-secondary) text-white hover:bg-slate-600",
         },
     ];
+
+    if (isAdmin) {
+        quickActions.push(
+            {
+                title: "Admin Workspace",
+                description: "Open the admin panel to publish fresh notes and manage the content flow.",
+                action: () => navigate("/admin"),
+                buttonLabel: "Open Admin",
+                buttonStyle: "border border-white/10 bg-white/8 text-white hover:bg-white/12",
+            },
+            {
+                title: "Manage Requests",
+                description: "Review note requests, mark them completed, and delete outdated ones.",
+                action: () => navigate("/admin/requests"),
+                buttonLabel: "Open Requests",
+                buttonStyle: "bg-amber-500 text-white hover:bg-amber-600",
+            }
+        );
+    }
 
     return (
         <div className="min-h-screen w-full bg-(--primary) px-4 py-10 text-white">
