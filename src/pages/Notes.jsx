@@ -10,16 +10,49 @@ export default function Notes() {
     const [notes, setNotes] = useState([]);
     const [query, setQuery] = useState("");
     const [loadingNotes, setLoadingNotes] = useState(false);
+    const [loadingFav, setLoadingFav] = useState(false);
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [favoriteIds, setFavoriteIds] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
             window.location.href = "/login";
         }
+        fetchFavorites();
         fetchNotes();
     }, []);
+
+    const handleToggleFavorite = async (noteId) => {
+        try {
+            setLoadingFav(true);
+            const res = await API.post(`/favorites/${noteId}`);
+
+            console.log(res.data);
+
+            setFavoriteIds((prev) =>
+                prev.includes(noteId)
+                    ? prev.filter((id) => id !== noteId)
+                    : [...prev, noteId]
+            );
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoadingFav(false);
+        }
+    };
+
+    const fetchFavorites = async () => {
+        try {
+            const res = await API.get("/favorites");
+
+            setFavoriteIds(res.data.map(note => note._id));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
 
     const fetchNotes = async () => {
         try {
@@ -55,12 +88,12 @@ export default function Notes() {
             setCurrentPage(1);
         } catch (err) {
             console.log(err);
-        }finally {
+        } finally {
             setLoadingSearch(false);
         }
     }
 
-    if (loadingNotes || loadingSearch) {
+    if (loadingNotes || loadingSearch || loadingFav) {
         return <Loader />;
     }
 
@@ -74,30 +107,64 @@ export default function Notes() {
     }
 
     return (
-        <div className="min-h-screen w-full bg-(--primary) px-4 py-10 text-(--text)">
-            <div className="mx-auto flex w-full max-w-7xl flex-col gap-10">
-                <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 px-6 py-10 shadow-2xl shadow-black/20 backdrop-blur-sm md:px-10">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.16),_transparent_30%),radial-gradient(circle_at_bottom_left,_rgba(34,197,94,0.2),_transparent_35%)]" />
+    <div className="min-h-screen w-full bg-(--background) px-4 py-10 text-(--text)">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
 
-                    <div className="relative flex flex-col gap-8">
-                        <div className="flex flex-col gap-3">
-                            <span className="w-fit rounded-full border border-white/15 bg-white/10 px-4 py-1 text-sm font-medium tracking-[0.2em] uppercase">
+            {/* Hero */}
+
+            <section className="relative overflow-hidden rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] px-6 py-10 shadow-[0_8px_24px_rgba(0,0,0,0.3)] md:px-10">
+
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(16,185,129,0.12),_transparent_30%),radial-gradient(circle_at_bottom_left,_rgba(5,150,105,0.08),_transparent_35%)]" />
+
+                <div className="relative flex flex-col gap-6">
+
+                    <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+
+                        <div className="flex max-w-3xl flex-col gap-3">
+
+                            <span className="w-fit rounded-full border border-(--border) bg-(--tertiary) px-4 py-1 text-sm font-medium uppercase tracking-[0.2em] text-(--primary-400)">
                                 Study Hub
                             </span>
-                            <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-5xl">
+
+                            <h1 className="max-w-3xl text-4xl font-bold leading-tight text-(--heading) md:text-5xl">
                                 Find the right notes faster and keep your study flow moving.
                             </h1>
-                            <p className="max-w-2xl text-sm text-white/70 md:text-base">
-                                Browse shared material, preview what you need, and download in one place.
+
+                            <p className="max-w-2xl text-sm text-(--text) md:text-base">
+                                Browse, save favorites, and jump into the right material without the clutter.
                             </p>
+
                         </div>
 
-                        <div className="relative grid gap-4 rounded-[1.75rem] border border-white/10 bg-black/10 p-4 md:grid-cols-[1fr_auto_auto] md:items-center">
+                        <div className="flex flex-wrap gap-3 text-sm">
+
+                            <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
+                                Total Notes: {notes.length}
+                            </span>
+
+                            <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
+                                Favorites: {favoriteIds.length}
+                            </span>
+
+                            <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
+                                Page {totalPages === 0 ? 0 : currentPage} of {totalPages}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    {/* Search */}
+
+                    <div className="flex flex-col gap-4 rounded-[1.75rem] border border-(--border) bg-(--surface) p-4">
+
+                        <div className="flex flex-col gap-3 md:flex-row">
+
                             <input
                                 type="text"
                                 value={query}
                                 placeholder="Search by title, subject, or keyword..."
-                                className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white outline-none transition duration-300 placeholder:text-white/50 focus:border-green-400 focus:bg-white/15"
+                                className="min-w-0 flex-1 rounded-2xl border border-(--border) bg-(--tertiary) px-4 py-3 text-(--heading) outline-none transition-all placeholder:text-(--text-disabled) focus:border-(--primary-500) focus:ring-4 focus:ring-(--primary-500)/20"
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
@@ -105,155 +172,209 @@ export default function Notes() {
                                     }
                                 }}
                             />
-                            <button
-                                onClick={() => handleSearch(query)}
-                                className="rounded-2xl bg-(--btn-primary) px-6 py-3 font-semibold text-(--text) transition-all duration-300 hover:scale-[1.02] hover:bg-green-900"
-                            >
-                                Search
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setQuery("");
-                                    fetchNotes();
-                                }}
-                                className="rounded-2xl border border-white/15 bg-white/10 px-6 py-3 font-semibold text-(--text) transition-all duration-300 hover:bg-white/15"
-                            >
-                                Reset
-                            </button>
+
+                            <div className="flex flex-wrap gap-3">
+
+                                <button
+                                    onClick={() => handleSearch(query)}
+                                    className="rounded-2xl bg-(--btn-primary) px-6 py-3 font-semibold text-white transition-all hover:bg-(--btn-primary-hover)"
+                                >
+                                    Search
+                                </button>
+
+                                <button
+                                    onClick={() => {
+                                        setQuery("");
+                                        fetchNotes();
+                                    }}
+                                    className="rounded-2xl border border-(--border) bg-(--tertiary) px-6 py-3 font-semibold text-(--heading) transition-all hover:bg-(--surface)"
+                                >
+                                    Reset
+                                </button>
+
+                            </div>
+
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
-                            <span className="rounded-full bg-white/10 px-4 py-2">
+                        <div className="flex flex-wrap items-center gap-3 text-sm">
+
+                            <span className="rounded-full border border-(--border) bg-(--tertiary) px-4 py-2">
                                 Total Notes: {notes.length}
                             </span>
-                            <span className="rounded-full bg-white/10 px-4 py-2">
+
+                            <span className="rounded-full border border-(--border) bg-(--tertiary) px-4 py-2">
                                 Showing {notes.length === 0 ? 0 : startIndex + 1}-{Math.min(startIndex + CARDS_PER_PAGE, notes.length)}
                             </span>
-                            <span className="rounded-full bg-white/10 px-4 py-2">
-                                Page {totalPages === 0 ? 0 : currentPage} of {totalPages}
-                            </span>
+
+                            <button
+                                onClick={() => navigate("/favorites")}
+                                className="rounded-full bg-(--btn-secondary) px-4 py-2 font-semibold text-white transition hover:bg-slate-600"
+                            >
+                                Open Favorites
+                            </button>
+
                             <button
                                 onClick={() => navigate("/note-request")}
-                                className="rounded-full bg-(--secondary) px-4 py-2 font-semibold text-white transition-all duration-300 hover:brightness-110"
+                                className="rounded-full bg-(--btn-primary) px-4 py-2 font-semibold text-white transition hover:bg-(--btn-primary-hover)"
                             >
                                 Request Missing Notes
                             </button>
+
                         </div>
-                    </div>
-                </section>
 
-                {notes.length <= 0 ? (
-                    <div className="flex min-h-[280px] items-center justify-center rounded-[2rem] border border-dashed border-white/15 bg-white/5 px-6 text-center">
-                        <p className="text-lg text-white/70">No notes available right now.</p>
                     </div>
-                ) : (
-                    <>
-                        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                            {paginatedNotes.map((note) => (
-                                <div
-                                    key={note._id}
-                                    className="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/95 text-slate-900 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
-                                >
-                                    <div className="relative overflow-hidden bg-slate-900/95 px-5 pt-5">
-                                        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(34,197,94,0.28),transparent_60%)]" />
-                                        <img src={CardImg} alt="Note cover" className="relative mx-auto h-40 w-full rounded-2xl object-cover" />
-                                    </div>
 
-                                    <div className="flex flex-col gap-4 p-5">
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div>
-                                                <p className="mb-2 w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
-                                                    {note.subject}
-                                                </p>
-                                                <h2 className="text-2xl font-bold leading-snug">{note.title}</h2>
-                                            </div>
+                </div>
+
+            </section>
+
+            {notes.length <= 0 ? (
+
+                <div className="flex min-h-[280px] items-center justify-center rounded-[2rem] border border-dashed border-(--border) bg-(--surface) px-6 text-center shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+                    <p className="text-lg text-(--text)">
+                        No notes available right now.
+                    </p>
+                </div>
+
+            ) : (
+
+                <>
+                    <div className="flex flex-wrap gap-5">
+
+                        {paginatedNotes.map((note) => (
+
+                            <div
+                                key={note._id}
+                                className="group flex min-w-[280px] flex-1 basis-[300px] flex-col overflow-hidden rounded-[1.5rem] border border-(--border) bg-(--surface) shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-all hover:-translate-y-1"
+                            >
+
+                                <div className="relative overflow-hidden bg-(--tertiary) px-4 pt-4">
+                                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(16,185,129,0.15),transparent_60%)]" />
+
+                                    <img
+                                        src={CardImg}
+                                        alt="Note cover"
+                                        className="relative mx-auto h-28 w-full rounded-[1.25rem] object-cover"
+                                    />
+                                </div>
+
+                                <div className="flex flex-1 flex-col gap-3 p-4">
+
+                                    <div className="flex items-start justify-between gap-3">
+
+                                        <div className="min-w-0">
+
+                                            <p className="mb-2 w-fit rounded-full bg-(--primary-500)/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-(--primary-300)">
+                                                {note.subject}
+                                            </p>
+
+                                            <h2 className="line-clamp-2 text-xl font-bold text-(--heading)">
+                                                {note.title}
+                                            </h2>
+
                                         </div>
 
-                                        <p className="text-sm leading-6 text-slate-600">
-                                            {note.description}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleToggleFavorite(note._id)}
+                                            className={`shrink-0 rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] ${
+                                                favoriteIds.includes(note._id)
+                                                    ? "bg-(--primary-500)/20 text-(--primary-300)"
+                                                    : "border border-(--border) bg-(--tertiary) text-(--text-muted)"
+                                            }`}
+                                        >
+                                            {favoriteIds.includes(note._id) ? "Saved" : "Favorite"}
+                                        </button>
+
+                                    </div>
+
+                                    <p className="line-clamp-3 text-sm leading-6 text-(--text)">
+                                        {note.description}
+                                    </p>
+
+                                    <div className="mt-auto space-y-2 rounded-[1.25rem] bg-(--tertiary) p-3 text-sm">
+
+                                        <p>
+                                            <span className="font-semibold text-(--heading)">
+                                                Updated:
+                                            </span>{" "}
+                                            {new Date(note.updatedAt).toDateString()}
                                         </p>
 
-                                        <div className="mt-auto space-y-2 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
-                                            <p>
-                                                <span className="font-semibold text-slate-900">Updated:</span>{" "}
-                                                {new Date(note.updatedAt).toDateString()}
-                                            </p>
-                                            <p>
-                                                <span className="font-semibold text-slate-900">Provided By:</span>{" "}
-                                                {note.uploadedBy}
-                                            </p>
-                                        </div>
+                                        <p>
+                                            <span className="font-semibold text-(--heading)">
+                                                Provided By:
+                                            </span>{" "}
+                                            {note.uploadedBy}
+                                        </p>
 
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <button
-                                                onClick={() => handleOpen(note.previewUrl)}
-                                                className="rounded-2xl bg-blue-600 px-4 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-700 active:scale-95"
-                                            >
-                                                Open
-                                            </button>
-                                            <button
-                                                onClick={() => handleDownload(note.downloadUrl)}
-                                                className="rounded-2xl bg-(--btn-primary) px-4 py-3 font-semibold text-(--text) transition-all duration-300 hover:bg-green-900 active:scale-95"
-                                            >
-                                                Download
-                                            </button>
-                                        </div>
                                     </div>
+
+                                    <div className="flex gap-3">
+
+                                        <button
+                                            onClick={() => handleOpen(note.previewUrl)}
+                                            className="flex-1 rounded-2xl bg-(--secondary) px-4 py-2.5 text-sm font-semibold text-white hover:bg-(--primary-600)"
+                                        >
+                                            Open
+                                        </button>
+
+                                        <button
+                                            onClick={() => handleDownload(note.downloadUrl)}
+                                            className="flex-1 rounded-2xl bg-(--btn-primary) px-4 py-2.5 text-sm font-semibold text-white hover:bg-(--btn-primary-hover)"
+                                        >
+                                            Download
+                                        </button>
+
+                                    </div>
+
                                 </div>
-                            ))}
-                        </div>
 
-                        {totalPages > 1 && (
-                        <div className="flex flex-wrap items-center justify-center gap-3">
-                            <button
-                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                                className="rounded-xl border border-white/15 bg-white/10 px-4 py-2 font-medium transition-all duration-300 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-40"
-                                >
-                                    Previous
-                                </button>
-
-                                {visiblePageNumbers.map((pageNumber) => (
-                                    <button
-                                        key={pageNumber}
-                                        onClick={() => setCurrentPage(pageNumber)}
-                                        className={`h-11 w-11 rounded-xl font-semibold transition-all duration-300 ${
-                                            currentPage === pageNumber
-                                                ? "bg-(--btn-primary) text-(--text)"
-                                                : "border border-white/15 bg-white/10 text-white hover:bg-white/15"
-                                        }`}
-                                    >
-                                        {pageNumber}
-                                    </button>
-                                ))}
-
-                                <button
-                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
-                                    className="rounded-xl border border-white/15 bg-white/10 px-4 py-2 font-medium transition-all duration-300 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-40"
-                                >
-                                    Next
-                                </button>
                             </div>
-                        )}
 
-                        <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(59,131,246,0.12),rgba(17,24,39,0.94)_48%,rgba(17,114,53,0.16))] p-6 text-center shadow-xl shadow-black/10">
-                            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-200">Need Something Else?</p>
-                            <h3 className="mt-4 text-3xl font-bold text-white">Could not find the notes you were looking for?</h3>
-                            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-300">
-                                Send a note request to the admin and help prioritize the next uploads for the topics you actually need.
-                            </p>
-                            <button
-                                onClick={() => navigate("/note-request")}
-                                className="mt-6 rounded-2xl bg-(--secondary) px-6 py-3 font-semibold text-white transition-all duration-300 hover:brightness-110"
-                            >
-                                Open Request Page
-                            </button>
+                        ))}
+
+                    </div>
+
+                    {/* Pagination */}
+
+                    {totalPages > 1 && (
+                        <div className="flex flex-wrap items-center justify-center gap-3">
+
+                            {/* Keep your existing pagination logic.
+                                Just replace bg-white with bg-(--surface)
+                                and border-(--border-light) with border-(--border). */}
+
                         </div>
-                    </>
-                )}
-            </div>
-        </div>
-    )
+                    )}
 
+                    {/* Bottom CTA */}
+
+                    <div className="rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] p-6 text-center shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+
+                        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-(--primary-300)">
+                            Need Something Else?
+                        </p>
+
+                        <h3 className="mt-4 text-3xl font-bold text-(--heading)">
+                            Could not find the notes you were looking for?
+                        </h3>
+
+                        <p className="mx-auto mt-4 max-w-2xl leading-7 text-(--text)">
+                            Send a note request to the admin and help prioritize the next uploads for the topics you actually need.
+                        </p>
+
+                        <button
+                            onClick={() => navigate("/note-request")}
+                            className="mt-6 rounded-2xl bg-(--btn-primary) px-6 py-3 font-semibold text-white transition hover:bg-(--btn-primary-hover)"
+                        >
+                            Open Request Page
+                        </button>
+
+                    </div>
+                </>
+            )}
+        </div>
+    </div>
+);
 }

@@ -1,11 +1,48 @@
 @import "tailwindcss";
 
 :root{
-    --primary: #0F172A;  /* Main background, Navbar, Hero section */
-    --secondary: #3b83f6; /* Titles, Important Headings, Highlights */
-    --tertiary: #111827;  /* Secondary Background */
-    --text: #94A3B8;    /* Paragraph, Descriptions, Secondary Text */
-    --border: #3b475a;   /* Cards, Input fields, Deviders */
-    --btn-primary: #117235;   /* Submit, Important Actions */
-    --btn-secondary: #334155;  /* Cancel, Secondary Actions */
+    --primary-50: #ECFDF5;
+    --primary-100: #D1FAE5;
+    --primary-200: #A7F3D0;
+    --primary-300: #6EE7B7;
+    --primary-400: #34D399;
+    --primary-500: #10B981;
+    --primary-600: #059669;
+    --primary-700: #047857;
+    --primary-800: #065F46;
+    --primary-900: #064E3B;
+
+    --primary: #0B1114;
+    --secondary: #121A1F;
+    --tertiary: #182228;
+
+    --text: #CBD5E1;
+    --text-muted: #94A3B8;
+    --text-disabled: #64748B;
+    --heading: #F8FAFC;
+    --subheading: #E2E8F0;
+
+    --border: #314048;
+    --border-light: #3B4952;
+
+    --surface: #1F2A30;
+    --surface-secondary: #27343B;
+
+    --btn-primary: #10B981;
+    --btn-primary-hover: #059669;
+    --btn-primary-active: #047857;
+    --btn-secondary: #223038;
+
+    --success: #22C55E;
+    --warning: #FBBF24;
+    --danger: #EF4444;
+}
+
+body {
+    background: var(--primary);
+    color: var(--text);
+}
+
+#root {
+    min-height: 100vh;
 }

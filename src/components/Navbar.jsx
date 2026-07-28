@@ -5,6 +5,7 @@ import Signature from "../assets/signature.png";
 const primaryLinks = [
     { to: "/", label: "Home" },
     { to: "/notes", label: "Notes" },
+    { to: "/favorites", label: "Favorites" },
     { to: "/note-request", label: "Request Notes" },
 ];
 
@@ -37,27 +38,27 @@ export default function Navbar() {
     };
 
     const navLinkClassName = ({ isActive }) =>
-        `rounded-full px-4 py-2 text-sm font-semibold tracking-[0.16em] uppercase transition-all duration-300 ${
+        `rounded-full px-4 py-2.5 text-sm font-semibold tracking-[0.14em] uppercase transition-all duration-300 ${
             isActive
-                ? "bg-(--secondary) text-white shadow-lg shadow-blue-500/20"
-                : "border border-white/10 bg-white/6 text-slate-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+                ? "border border-(--primary-600) bg-(--surface) text-(--primary-300) shadow-[0_8px_20px_rgba(16,185,129,0.18)]"
+                : "border border-(--border) bg-(--secondary) text-(--text-muted) hover:border-(--primary-500) hover:bg-(--surface) hover:text-(--primary-300)"
         }`;
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-white/10 bg-[linear-gradient(135deg,rgba(15,23,42,0.96),rgba(17,24,39,0.9))] backdrop-blur-xl">
-            <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-4 md:px-8 lg:flex-row lg:items-center lg:justify-between">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between lg:gap-6">
+        <nav className="sticky top-0 z-50 border-b border-(--border) bg-(--secondary)/85 shadow-[0_4px_20px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-3 md:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+                <div className="flex items-center justify-between gap-4 lg:gap-6">
                     <button
                         type="button"
                         onClick={() => navigate("/")}
-                        className="group flex items-center gap-3 text-left"
+                        className="group flex min-w-0 items-center gap-3 text-left"
                     >
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/8 shadow-lg shadow-black/10 transition-all duration-300 group-hover:border-blue-400/30 group-hover:bg-white/12">
-                            <span className="text-xl text-white">CL</span>
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-(--primary-600) bg-[linear-gradient(135deg,#10B981,#047857)] shadow-[0_8px_20px_rgba(16,185,129,0.28)] transition-all duration-300 group-hover:scale-[1.02]">
+                            <span className="text-lg font-bold tracking-[0.16em] text-white">CL</span>
                         </div>
-                        <div>
-                            <p className="text-lg font-black tracking-[0.18em] text-white uppercase">CampusLink</p>
-                            <p className="text-sm text-slate-400">Find notes. Stay ready.</p>
+                        <div className="min-w-0">
+                            <p className="truncate text-base font-black tracking-[0.18em] text-(--heading) uppercase sm:text-lg">CampusLink</p>
+                            <p className="truncate text-xs text-(--text-muted) sm:text-sm">Notes, requests, and favorites in one flow.</p>
                         </div>
                     </button>
 
@@ -70,13 +71,13 @@ export default function Navbar() {
                         <img
                             src={Signature}
                             alt="Dheeraj signature"
-                            className="w-36 object-contain opacity-20 transition-all duration-300 hover:opacity-55"
+                            className="w-36 object-contain opacity-20 transition-all duration-300 hover:opacity-45"
                         />
                     </a>
                 </div>
 
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-5">
-                    <div className="flex flex-wrap gap-3">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+                    <div className="flex flex-wrap gap-2 rounded-[1.5rem] border border-(--border) bg-(--tertiary) p-2">
                         {primaryLinks.map((link) => (
                             <NavLink key={link.to} to={link.to} className={navLinkClassName}>
                                 {link.label}
@@ -84,10 +85,10 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    <div className="h-px w-full bg-white/10 lg:h-10 lg:w-px" />
+                    <div className="hidden h-10 w-px bg-(--border) lg:block" />
 
                     {isLoggedIn ? (
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                             {isAdmin && (
                                 <NavLink to="/admin" className={navLinkClassName}>
                                     Admin
@@ -99,19 +100,22 @@ export default function Navbar() {
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="rounded-full bg-(--btn-primary) px-5 py-2.5 text-sm font-semibold tracking-[0.16em] text-white uppercase transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
+                                className="rounded-full bg-(--btn-primary) px-5 py-2.5 text-sm font-semibold tracking-[0.14em] text-white uppercase shadow-[0_8px_20px_rgba(16,185,129,0.28)] transition-all duration-300 hover:bg-(--btn-primary-hover) active:scale-[0.98]"
                             >
                                 {loadingLogout ? "Logging out..." : "Logout"}
                             </button>
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <NavLink to="/login" className={navLinkClassName}>
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                            <NavLink
+                                to="/login"
+                                className="rounded-full border border-(--border) bg-(--surface) px-5 py-2.5 text-center text-sm font-semibold tracking-[0.14em] text-(--primary-300) uppercase transition-all duration-300 hover:border-(--primary-500) hover:bg-(--surface-secondary) active:scale-[0.98]"
+                            >
                                 Login
                             </NavLink>
                             <Link
                                 to="/signup"
-                                className="rounded-full bg-(--secondary) px-5 py-2.5 text-center text-sm font-semibold tracking-[0.16em] text-white uppercase transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
+                                className="rounded-full bg-(--btn-primary) px-5 py-2.5 text-center text-sm font-semibold tracking-[0.14em] text-white uppercase shadow-[0_8px_20px_rgba(16,185,129,0.28)] transition-all duration-300 hover:bg-(--btn-primary-hover) active:scale-[0.98]"
                             >
                                 Signup
                             </Link>

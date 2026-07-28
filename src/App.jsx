@@ -11,6 +11,7 @@ import ControlRequests from './admin/controlRequests'
 import NotFound from './pages/404'
 import Profile from './pages/Profile'
 import NoteRequest from './pages/NoteRequest'
+import Favorites from './pages/Favorites'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/notes' element={<Notes />} />
+        <Route path='/favorites' element={<Favorites />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/admin/requests' element={<ControlRequests />} />
         <Route path='/profile' element={<Profile />} />
