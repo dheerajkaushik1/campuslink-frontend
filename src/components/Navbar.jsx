@@ -173,8 +173,10 @@ export default function Navbar() {
                 />
 
                 <aside
-                    className={`fixed top-0 right-0 z-50 flex h-full w-[min(86vw,22rem)] flex-col gap-5 border-l border-(--border) bg-(--secondary) px-4 py-5 shadow-[-16px_0_40px_rgba(0,0,0,0.35)] transition-transform duration-300 ${
-                        isSidebarOpen ? "translate-x-0" : "translate-x-full"
+                    className={`fixed top-0 right-0 z-50 flex h-full w-[min(86vw,22rem)] flex-col gap-5 border-l border-(--border) bg-(--secondary) px-4 py-5 shadow-[-16px_0_40px_rgba(0,0,0,0.35)] transition-all duration-300 ${
+                        isSidebarOpen
+                            ? "translate-x-0 opacity-100 visible"
+                            : "translate-x-[110%] opacity-0 invisible"
                     }`}
                 >
                     <div className="flex items-center justify-between gap-3">

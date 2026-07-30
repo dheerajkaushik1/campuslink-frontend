@@ -124,7 +124,7 @@ export default function QuizLeaderboard() {
         </section>
       ) : (
         <>
-          <section className="grid gap-4 lg:grid-cols-3">
+          <section className="grid gap-4 lg:grid-cols-3 text-white">
             {topThree[1] && (
               <PodiumCard
                 entry={topThree[1]}
