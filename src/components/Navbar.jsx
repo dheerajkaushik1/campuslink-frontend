@@ -6,6 +6,7 @@ const primaryLinks = [
     { to: "/", label: "Home" },
     { to: "/notes", label: "Notes" },
     { to: "/quiz", label: "AI Quiz" },
+    { to: "/quiz/leaderboard", label: "Leaderboard" },
     { to: "/meet-the-admin", label: "Meet Admin" },
     { to: "/favorites", label: "Favorites" },
     { to: "/note-request", label: "Request Notes" },

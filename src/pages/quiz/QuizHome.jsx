@@ -89,6 +89,15 @@ export default function QuizHome() {
       <QuizNavbar
         title="AI Quiz"
         subtitle="Choose difficulty, select a subject, and start."
+        actions={
+          <button
+            type="button"
+            onClick={() => navigate("/quiz/leaderboard")}
+            className="rounded-2xl border border-indigo-300/20 bg-white/10 px-5 py-3 font-semibold text-white shadow-[0_16px_45px_rgba(59,130,246,0.16)] transition hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/16"
+          >
+            View Leaderboard
+          </button>
+        }
       />
 
       <section className="flex flex-col gap-8">
