@@ -1,1 +1,85 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.quiz-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(226, 232, 240, 0.78) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(226, 232, 240, 0.78) 100%);
+  background-size: 200% 100%;
+  animation: quiz-shimmer 1.8s linear infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.55s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.45s ease-out both;
+}
+
+.animate-float-soft {
+  animation: float-soft 4.8s ease-in-out infinite;
+}
+
+@keyframes quiz-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}

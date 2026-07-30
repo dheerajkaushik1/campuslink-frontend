@@ -1,0 +1,422 @@
+export const quizSubjects = [
+  {
+    id: "dbms",
+    name: "DBMS",
+    description: "Schemas, queries, normalization, and transactions.",
+    icon: "Database",
+    questions: 10,
+    duration: "12 min",
+    accent: "from-sky-500 via-indigo-500 to-violet-500",
+  },
+  {
+    id: "dsa",
+    name: "DSA",
+    description: "Practice problem solving, trees, graphs, and complexity.",
+    icon: "Binary",
+    questions: 10,
+    duration: "15 min",
+    accent: "from-indigo-500 via-violet-500 to-fuchsia-500",
+  },
+  {
+    id: "operating-system",
+    name: "Operating System",
+    description: "Processes, scheduling, memory, and synchronization.",
+    icon: "Cpu",
+    questions: 10,
+    duration: "14 min",
+    accent: "from-cyan-500 via-blue-500 to-indigo-500",
+  },
+  {
+    id: "computer-networks",
+    name: "Computer Networks",
+    description: "Protocols, routing, layers, and troubleshooting.",
+    icon: "Network",
+    questions: 10,
+    duration: "13 min",
+    accent: "from-blue-500 via-indigo-500 to-purple-500",
+  },
+  {
+    id: "web-development",
+    name: "Web Development",
+    description: "Frontend, backend, APIs, and modern app workflows.",
+    icon: "Globe",
+    questions: 10,
+    duration: "11 min",
+    accent: "from-sky-500 via-blue-500 to-indigo-600",
+  },
+  {
+    id: "java",
+    name: "Java",
+    description: "OOP, collections, JVM basics, and core syntax.",
+    icon: "Coffee",
+    questions: 10,
+    duration: "10 min",
+    accent: "from-violet-500 via-purple-500 to-fuchsia-500",
+  },
+  {
+    id: "python",
+    name: "Python",
+    description: "Core syntax, data handling, and practical workflows.",
+    icon: "FileCode2",
+    questions: 10,
+    duration: "10 min",
+    accent: "from-sky-500 via-cyan-500 to-blue-600",
+  },
+  {
+    id: "cpp",
+    name: "C++",
+    description: "Pointers, STL, memory, and performance reasoning.",
+    icon: "Braces",
+    questions: 10,
+    duration: "14 min",
+    accent: "from-indigo-500 via-blue-500 to-sky-500",
+  },
+];
+
+export const quizDifficulties = [
+  { id: "easy", label: "Easy", tone: "from-emerald-400 to-cyan-500" },
+  { id: "medium", label: "Medium", tone: "from-amber-400 to-orange-500" },
+  { id: "hard", label: "Hard", tone: "from-rose-500 to-fuchsia-500" },
+];
+
+export const quizStats = {
+  quizzesTaken: 27,
+  highestScore: "9/10",
+  averageScore: "78%",
+  recentBest: {
+    subject: "Web Development",
+    difficulty: "Medium",
+    score: "8/10",
+    percentage: 80,
+    date: "July 26, 2026",
+  },
+};
+
+export const dashboardSummary = {
+  totalQuizzes: 27,
+  highestScore: 9,
+  averageScore: 78,
+  totalCorrectAnswers: 214,
+  accuracy: 79,
+  favoriteSubject: "Web Development",
+};
+
+export const weeklyActivity = [
+  { day: "Mon", value: 3 },
+  { day: "Tue", value: 5 },
+  { day: "Wed", value: 4 },
+  { day: "Thu", value: 6 },
+  { day: "Fri", value: 2 },
+  { day: "Sat", value: 7 },
+  { day: "Sun", value: 4 },
+];
+
+export const monthlyProgress = [
+  { month: "Jan", value: 58 },
+  { month: "Feb", value: 61 },
+  { month: "Mar", value: 66 },
+  { month: "Apr", value: 70 },
+  { month: "May", value: 75 },
+  { month: "Jun", value: 80 },
+  { month: "Jul", value: 84 },
+];
+
+export const recentQuizList = [
+  {
+    id: "rq1",
+    subject: "DBMS",
+    difficulty: "Easy",
+    score: "7/10",
+    percentage: 70,
+    date: "July 28, 2026",
+    timeTaken: "09m 44s",
+    status: "Passed",
+  },
+  {
+    id: "rq2",
+    subject: "DSA",
+    difficulty: "Hard",
+    score: "6/10",
+    percentage: 60,
+    date: "July 27, 2026",
+    timeTaken: "13m 18s",
+    status: "Passed",
+  },
+  {
+    id: "rq3",
+    subject: "Web Development",
+    difficulty: "Medium",
+    score: "8/10",
+    percentage: 80,
+    date: "July 26, 2026",
+    timeTaken: "10m 51s",
+    status: "Passed",
+  },
+  {
+    id: "rq4",
+    subject: "Computer Networks",
+    difficulty: "Hard",
+    score: "4/10",
+    percentage: 40,
+    date: "July 21, 2026",
+    timeTaken: "14m 28s",
+    status: "Needs Work",
+  },
+];
+
+export const leaderboardEntries = [
+  {
+    id: "u3",
+    rank: 3,
+    name: "Aarav Sharma",
+    score: "10/10",
+    percentage: 100,
+    subject: "DSA",
+    difficulty: "Hard",
+    date: "July 28, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u2",
+    rank: 2,
+    name: "Riya Verma",
+    score: "9/10",
+    percentage: 90,
+    subject: "DBMS",
+    difficulty: "Medium",
+    date: "July 27, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u1",
+    rank: 1,
+    name: "Dheeraj Kaushik",
+    score: "10/10",
+    percentage: 90,
+    subject: "Web Development",
+    difficulty: "Medium",
+    date: "July 26, 2026",
+    isCurrentUser: true,
+  },
+  {
+    id: "u4",
+    rank: 4,
+    name: "Ananya Singh",
+    score: "8/10",
+    percentage: 80,
+    subject: "Operating System",
+    difficulty: "Hard",
+    date: "July 25, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u5",
+    rank: 5,
+    name: "Kabir Mehta",
+    score: "8/10",
+    percentage: 80,
+    subject: "Python",
+    difficulty: "Easy",
+    date: "July 24, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u6",
+    rank: 6,
+    name: "Megha Nair",
+    score: "7/10",
+    percentage: 70,
+    subject: "Java",
+    difficulty: "Medium",
+    date: "July 24, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u7",
+    rank: 7,
+    name: "Rohan Jain",
+    score: "7/10",
+    percentage: 70,
+    subject: "C++",
+    difficulty: "Hard",
+    date: "July 22, 2026",
+    isCurrentUser: false,
+  },
+  {
+    id: "u8",
+    rank: 8,
+    name: "Ishita Patel",
+    score: "6/10",
+    percentage: 60,
+    subject: "Computer Networks",
+    difficulty: "Medium",
+    date: "July 20, 2026",
+    isCurrentUser: false,
+  },
+];
+
+export const quizHistoryEntries = [
+  ...recentQuizList,
+  {
+    id: "qh5",
+    subject: "Java",
+    difficulty: "Medium",
+    score: "5/10",
+    percentage: 50,
+    date: "July 18, 2026",
+    timeTaken: "11m 32s",
+    status: "Needs Work",
+  },
+  {
+    id: "qh6",
+    subject: "Python",
+    difficulty: "Easy",
+    score: "9/10",
+    percentage: 90,
+    date: "July 17, 2026",
+    timeTaken: "08m 27s",
+    status: "Passed",
+  },
+];
+
+export const continueQuiz = {
+  id: "cq1",
+  subject: "Operating System",
+  difficulty: "Hard",
+  currentQuestion: 4,
+  totalQuestions: 10,
+  timeLeft: "07m 52s",
+};
+
+export const mockQuizSession = {
+  quizId: "quiz-web-medium-2026",
+  subject: "Web Development",
+  difficulty: "Medium",
+  durationInSeconds: 12 * 60,
+  questions: [
+    {
+      id: "q1",
+      question: "Which HTTP method is the best semantic choice for partially updating an existing resource?",
+      options: ["GET", "PATCH", "POST", "PUT"],
+      correctAnswer: "PATCH",
+    },
+    {
+      id: "q2",
+      question: "What is the primary purpose of React keys when rendering lists?",
+      options: [
+        "To secure component state",
+        "To make styles reusable",
+        "To help React identify item changes efficiently",
+        "To improve API response caching",
+      ],
+      correctAnswer: "To help React identify item changes efficiently",
+    },
+    {
+      id: "q3",
+      question: "Which browser storage option automatically clears when the tab session ends?",
+      options: ["Local Storage", "IndexedDB", "Session Storage", "Cookies"],
+      correctAnswer: "Session Storage",
+    },
+    {
+      id: "q4",
+      question: "In CSS, what does `position: sticky` do?",
+      options: [
+        "Pins an element to the viewport at all times",
+        "Keeps an element fixed only on mobile",
+        "Acts relative until a scroll threshold, then sticks",
+        "Disables overflow inside a container",
+      ],
+      correctAnswer: "Acts relative until a scroll threshold, then sticks",
+    },
+    {
+      id: "q5",
+      question: "What is the main advantage of debouncing a search input?",
+      options: [
+        "It guarantees zero API failures",
+        "It reduces repeated rapid calls while the user types",
+        "It makes the input controlled automatically",
+        "It encrypts outgoing requests",
+      ],
+      correctAnswer: "It reduces repeated rapid calls while the user types",
+    },
+    {
+      id: "q6",
+      question: "Which status code usually represents a successful creation of a new resource?",
+      options: ["200", "201", "204", "302"],
+      correctAnswer: "201",
+    },
+    {
+      id: "q7",
+      question: "What is the most common role of an API gateway in a modern web system?",
+      options: [
+        "Replacing databases with cache",
+        "Bundling CSS assets",
+        "Routing, auth, and aggregation for backend services",
+        "Generating HTML emails",
+      ],
+      correctAnswer: "Routing, auth, and aggregation for backend services",
+    },
+    {
+      id: "q8",
+      question: "Which HTML element is the most semantically appropriate for the main content area of a page?",
+      options: ["section", "main", "div", "article"],
+      correctAnswer: "main",
+    },
+    {
+      id: "q9",
+      question: "Why are environment variables commonly used in MERN applications?",
+      options: [
+        "To replace component props",
+        "To keep configuration separate from source code",
+        "To optimize Tailwind classes automatically",
+        "To remove the need for a backend",
+      ],
+      correctAnswer: "To keep configuration separate from source code",
+    },
+    {
+      id: "q10",
+      question: "What is one major benefit of using server-side validation even when client-side validation exists?",
+      options: [
+        "It improves icon rendering",
+        "It prevents all network latency",
+        "It enforces rules even if the client is bypassed",
+        "It removes the need for forms",
+      ],
+      correctAnswer: "It enforces rules even if the client is bypassed",
+    },
+  ],
+};
+
+export const performanceBreakdown = [
+  { label: "Concept Recall", value: "Excellent", detail: "Answered most theory questions accurately." },
+  { label: "Speed", value: "Strong", detail: "Maintained a steady pace with time remaining." },
+  { label: "Consistency", value: "Improving", detail: "A couple of tricky edge cases still need revision." },
+];
+
+export const errorVariants = {
+  network: {
+    title: "Network Error",
+    message: "We could not reach the quiz service. Check your connection and try again.",
+    cta: "Retry Connection",
+  },
+  expired: {
+    title: "Quiz Expired",
+    message: "This quiz session timed out before submission. Start a fresh attempt to continue.",
+    cta: "Start New Quiz",
+  },
+  notfound: {
+    title: "Quiz Not Found",
+    message: "The quiz you are looking for is no longer available or the link is invalid.",
+    cta: "Browse Quizzes",
+  },
+  session: {
+    title: "Session Expired",
+    message: "Your login session expired while accessing the quiz module. Please sign in again.",
+    cta: "Go to Login",
+  },
+  server: {
+    title: "Server Error",
+    message: "Something unexpected happened on our side. Please retry in a moment.",
+    cta: "Retry Request",
+  },
+};

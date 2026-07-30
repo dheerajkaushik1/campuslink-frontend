@@ -70,6 +70,13 @@ export default function Profile() {
             buttonStyle: "bg-(--secondary) text-white hover:bg-(--primary-600) shadow-[0_8px_20px_rgba(37,99,235,0.18)]",
         },
         {
+            title: "AI Quiz Dashboard",
+            description: "Track quiz performance, open leaderboards, and jump into premium AI-powered practice sessions.",
+            action: () => navigate("/quiz/dashboard"),
+            buttonLabel: "Open Quiz Dashboard",
+            buttonStyle: "bg-(--btn-primary) text-white hover:bg-(--btn-primary-hover) shadow-[0_8px_20px_rgba(37,99,235,0.18)]",
+        },
+        {
             title: "Return Home",
             description: "Jump back to the redesigned landing page and featured sections.",
             action: () => navigate("/"),

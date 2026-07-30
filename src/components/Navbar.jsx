@@ -5,6 +5,8 @@ import Signature from "../assets/signature.png";
 const primaryLinks = [
     { to: "/", label: "Home" },
     { to: "/notes", label: "Notes" },
+    { to: "/quiz", label: "AI Quiz" },
+    { to: "/meet-the-admin", label: "Meet Admin" },
     { to: "/favorites", label: "Favorites" },
     { to: "/note-request", label: "Request Notes" },
 ];
@@ -15,12 +17,17 @@ export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loadingLogout, setLoadingLogout] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const email = localStorage.getItem("email");
         setIsLoggedIn(Boolean(token));
         setIsAdmin(email === "dheerajkaushik428@gmail.com");
+    }, [location.pathname]);
+
+    useEffect(() => {
+        setIsSidebarOpen(false);
     }, [location.pathname]);
 
     const handleLogout = () => {
@@ -74,9 +81,36 @@ export default function Navbar() {
                             className="w-36 object-contain opacity-20 transition-all duration-300 hover:opacity-45"
                         />
                     </a>
+
+                    <button
+                        type="button"
+                        onClick={() => setIsSidebarOpen((current) => !current)}
+                        aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={isSidebarOpen}
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-(--border) bg-(--tertiary) text-(--heading) transition-all duration-300 hover:border-(--primary-500) hover:text-(--primary-300) lg:hidden"
+                    >
+                        <span className="sr-only">{isSidebarOpen ? "Close menu" : "Open menu"}</span>
+                        <div className="flex h-4 w-5 flex-col items-center justify-between">
+                            <span
+                                className={`block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                                    isSidebarOpen ? "translate-y-[7px] rotate-45" : ""
+                                }`}
+                            />
+                            <span
+                                className={`block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                                    isSidebarOpen ? "opacity-0" : ""
+                                }`}
+                            />
+                            <span
+                                className={`block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                                    isSidebarOpen ? "-translate-y-[7px] -rotate-45" : ""
+                                }`}
+                            />
+                        </div>
+                    </button>
                 </div>
 
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+                <div className="hidden lg:flex lg:flex-row lg:items-center lg:gap-4">
                     <div className="flex flex-wrap gap-2 rounded-[1.5rem] border border-(--border) bg-(--tertiary) p-2">
                         {primaryLinks.map((link) => (
                             <NavLink key={link.to} to={link.to} className={navLinkClassName}>
@@ -122,6 +156,86 @@ export default function Navbar() {
                         </div>
                     )}
                 </div>
+            </div>
+
+            <div
+                className={`lg:hidden ${isSidebarOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+                aria-hidden={!isSidebarOpen}
+            >
+                <button
+                    type="button"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={`fixed inset-0 z-40 bg-black/45 transition-opacity duration-300 ${
+                        isSidebarOpen ? "opacity-100" : "opacity-0"
+                    }`}
+                    aria-label="Close sidebar"
+                />
+
+                <aside
+                    className={`fixed top-0 right-0 z-50 flex h-full w-[min(86vw,22rem)] flex-col gap-5 border-l border-(--border) bg-(--secondary) px-4 py-5 shadow-[-16px_0_40px_rgba(0,0,0,0.35)] transition-transform duration-300 ${
+                        isSidebarOpen ? "translate-x-0" : "translate-x-full"
+                    }`}
+                >
+                    <div className="flex items-center justify-between gap-3">
+                        <div>
+                            <p className="text-sm font-black tracking-[0.18em] text-(--heading) uppercase">CampusLink</p>
+                            <p className="text-xs text-(--text-muted)">Quick navigation</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setIsSidebarOpen(false)}
+                            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-(--border) bg-(--tertiary) text-(--heading) transition-all duration-300 hover:border-(--primary-500) hover:text-(--primary-300)"
+                            aria-label="Close menu"
+                        >
+                            <span className="text-sm font-semibold leading-none">X</span>
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col gap-2 rounded-[1.5rem] border border-(--border) bg-(--tertiary) p-2">
+                        {primaryLinks.map((link) => (
+                            <NavLink key={link.to} to={link.to} className={navLinkClassName}>
+                                {link.label}
+                            </NavLink>
+                        ))}
+                    </div>
+
+                    <div className="h-px bg-(--border)" />
+
+                    {isLoggedIn ? (
+                        <div className="flex flex-col gap-2">
+                            {isAdmin && (
+                                <NavLink to="/admin" className={navLinkClassName}>
+                                    Admin
+                                </NavLink>
+                            )}
+                            <NavLink to="/profile" className={navLinkClassName}>
+                                Profile
+                            </NavLink>
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                className="rounded-full bg-(--btn-primary) px-5 py-2.5 text-sm font-semibold tracking-[0.14em] text-white uppercase shadow-[0_8px_20px_rgba(16,185,129,0.28)] transition-all duration-300 hover:bg-(--btn-primary-hover) active:scale-[0.98]"
+                            >
+                                {loadingLogout ? "Logging out..." : "Logout"}
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-2">
+                            <NavLink
+                                to="/login"
+                                className="rounded-full border border-(--border) bg-(--surface) px-5 py-2.5 text-center text-sm font-semibold tracking-[0.14em] text-(--primary-300) uppercase transition-all duration-300 hover:border-(--primary-500) hover:bg-(--surface-secondary) active:scale-[0.98]"
+                            >
+                                Login
+                            </NavLink>
+                            <Link
+                                to="/signup"
+                                className="rounded-full bg-(--btn-primary) px-5 py-2.5 text-center text-sm font-semibold tracking-[0.14em] text-white uppercase shadow-[0_8px_20px_rgba(16,185,129,0.28)] transition-all duration-300 hover:bg-(--btn-primary-hover) active:scale-[0.98]"
+                            >
+                                Signup
+                            </Link>
+                        </div>
+                    )}
+                </aside>
             </div>
         </nav>
     );
