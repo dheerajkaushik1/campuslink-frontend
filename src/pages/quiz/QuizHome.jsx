@@ -12,7 +12,7 @@ import { startQuiz } from "../../services/quizService";
 
 const TOTAL_QUESTIONS = 10;
 
-export default function QuizHome() {
+export default function QuizHome() { 
   const navigate = useNavigate();
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState("");

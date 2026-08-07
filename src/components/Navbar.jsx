@@ -5,6 +5,8 @@ import Signature from "../assets/signature.png";
 const primaryLinks = [
     { to: "/", label: "Home" },
     { to: "/notes", label: "Notes" },
+    { to: "/syllabus", label: "Syllabus" },
+    { to: "/papers", label: "Papers" },
     { to: "/quiz", label: "AI Quiz" },
     { to: "/quiz/leaderboard", label: "Leaderboard" },
     { to: "/meet-the-admin", label: "Meet Admin" },

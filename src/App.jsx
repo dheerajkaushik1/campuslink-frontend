@@ -13,6 +13,8 @@ import NotFound from './pages/404'
 import Profile from './pages/Profile'
 import NoteRequest from './pages/NoteRequest'
 import Favorites from './pages/Favorites'
+import Syllabus from './pages/Others/Syllabus'
+import PyP from './pages/Others/PyP'
 import QuizHome from './pages/quiz/QuizHome'
 import QuizPlay from './pages/quiz/QuizPlay'
 import QuizResult from './pages/quiz/QuizResult'
@@ -30,6 +32,8 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/notes' element={<Notes />} />
+        <Route path='/syllabus' element={<Syllabus />} />
+        <Route path='/papers' element={<PyP />} />
         <Route path='/favorites' element={<Favorites />} />
         <Route path='/quiz' element={<QuizHome />} />
         <Route path='/quiz/play' element={<QuizPlay />} />
