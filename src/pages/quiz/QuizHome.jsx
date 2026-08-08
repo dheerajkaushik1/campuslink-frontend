@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, BrainCircuit, Clock3, LoaderCircle, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SEO from '../../components/SEO'
+
 import {
   DifficultyCard,
   QuizModuleShell,
@@ -12,7 +14,7 @@ import { startQuiz } from "../../services/quizService";
 
 const TOTAL_QUESTIONS = 10;
 
-export default function QuizHome() { 
+export default function QuizHome() {
   const navigate = useNavigate();
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
@@ -85,93 +87,101 @@ export default function QuizHome() {
   };
 
   return (
-    <QuizModuleShell className="pb-12 pt-8">
-      <QuizNavbar
-        title="AI Quiz"
-        subtitle="Choose difficulty, select a subject, and start."
-        actions={
-          <button
-            type="button"
-            onClick={() => navigate("/quiz/leaderboard")}
-            className="rounded-2xl border border-indigo-300/20 bg-white/10 px-5 py-3 font-semibold text-white shadow-[0_16px_45px_rgba(59,130,246,0.16)] transition hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/16"
-          >
-            View Leaderboard
-          </button>
-        }
+    <>
+      <SEO
+        title="Online Quizzes - CampusLink"
+        description="Test your knowledge with interactive quizzes for college subjects on CampusLink."
+        path="/quiz"
       />
+      <QuizModuleShell className="pb-12 pt-8">
+        <QuizNavbar
+          title="AI Quiz"
+          subtitle="Choose difficulty, select a subject, and start."
+          actions={
+            <button
+              type="button"
+              onClick={() => navigate("/quiz/leaderboard")}
+              className="rounded-2xl border border-indigo-300/20 bg-white/10 px-5 py-3 font-semibold text-white shadow-[0_16px_45px_rgba(59,130,246,0.16)] transition hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/16"
+            >
+              View Leaderboard
+            </button>
+          }
+        />
 
-      <section className="flex flex-col gap-8">
-        <div className="relative overflow-hidden rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-8">
+        <section className="flex flex-col gap-8">
+          <div className="relative overflow-hidden rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-8">
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(5,150,105,0.08),transparent_35%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(5,150,105,0.08),transparent_35%)]" />
 
-          <div className="relative">
+            <div className="relative">
 
-            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
 
-              <span className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--tertiary) px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
-                <Sparkles className="h-4 w-4" />
-                AI Powered
-              </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--tertiary) px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
+                  <Sparkles className="h-4 w-4" />
+                  AI Powered
+                </span>
 
-              <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-sm font-medium text-(--text)">
-                📚 {TOTAL_QUESTIONS} Questions
-              </span>
+                <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-sm font-medium text-(--text)">
+                  📚 {TOTAL_QUESTIONS} Questions
+                </span>
 
-              <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-sm font-medium text-(--text)">
-                ⏱ {estimatedDuration}
-              </span>
+                <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-sm font-medium text-(--text)">
+                  ⏱ {estimatedDuration}
+                </span>
 
-            </div>
-
-            <div className="mt-8 flex flex-col gap-6">
-
-              <div>
-                <h2 className="text-4xl font-black tracking-tight text-(--heading) sm:text-5xl">
-                  Generate Your Next AI Quiz
-                </h2>
-
-                <p className="mt-4 max-w-2xl text-base leading-7 text-(--text)">
-                  Select your preferred difficulty and subject to generate a fresh,
-                  AI-powered quiz tailored to your learning goals.
-                </p>
               </div>
 
-              <div className="relative overflow-hidden rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_18px_45px_rgba(0,0,0,0.25)]">
+              <div className="mt-8 flex flex-col gap-6">
 
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.10),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(5,150,105,0.08),transparent_35%)]" />
+                <div>
+                  <h2 className="text-4xl font-black tracking-tight text-(--heading) sm:text-5xl">
+                    Generate Your Next AI Quiz
+                  </h2>
 
-                <div className="relative flex flex-col gap-5">
+                  <p className="mt-4 max-w-2xl text-base leading-7 text-(--text)">
+                    Select your preferred difficulty and subject to generate a fresh,
+                    AI-powered quiz tailored to your learning goals.
+                  </p>
+                </div>
 
-                  <div className="flex items-center justify-between">
+                <div className="relative overflow-hidden rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_18px_45px_rgba(0,0,0,0.25)]">
 
-                    <div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.10),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(5,150,105,0.08),transparent_35%)]" />
 
-                      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-(--primary-400)">
-                        Live Preview
-                      </p>
+                  <div className="relative flex flex-col gap-5">
 
-                      <h3 className="mt-2 text-2xl font-bold text-(--heading)">
-                        Quiz Setup
-                      </h3>
+                    <div className="flex items-center justify-between">
+
+                      <div>
+
+                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-(--primary-400)">
+                          Live Preview
+                        </p>
+
+                        <h3 className="mt-2 text-2xl font-bold text-(--heading)">
+                          Quiz Setup
+                        </h3>
+
+                      </div>
+
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--btn-primary)/20">
+                        <BrainCircuit className="h-7 w-7 text-(--primary-400)" />
+                      </div>
 
                     </div>
 
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--btn-primary)/20">
-                      <BrainCircuit className="h-7 w-7 text-(--primary-400)" />
+                    <div className="flex flex-wrap gap-3 rounded-[1.5rem] border border-(--border) bg-(--tertiary) p-5">
+
+                      {previewItems.map((item) => (
+                        <PreviewBlock
+                          key={item.label}
+                          label={item.label}
+                          value={item.value}
+                        />
+                      ))}
+
                     </div>
-
-                  </div>
-
-                  <div className="flex flex-wrap gap-3 rounded-[1.5rem] border border-(--border) bg-(--tertiary) p-5">
-
-                    {previewItems.map((item) => (
-                      <PreviewBlock
-                        key={item.label}
-                        label={item.label}
-                        value={item.value}
-                      />
-                    ))}
 
                   </div>
 
@@ -183,133 +193,132 @@ export default function QuizHome() {
 
           </div>
 
-        </div>
-
-        <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
-          <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
-              Step 1
-            </p>
-
-            <h2 className="text-3xl font-black text-(--heading)">
-              Choose Difficulty
-            </h2>
-
-            <p className="text-(--text)">
-              Select how challenging you want this quiz to be.
-            </p>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            {quizDifficulties.map((difficulty) => (
-              <DifficultyCard
-                key={difficulty.id}
-                difficulty={difficulty}
-                selected={selectedDifficulty === difficulty.id}
-                onSelect={handleDifficultySelect}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
-          <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
-              Step 2
-            </p>
-
-            <h2 className="text-3xl font-black text-(--heading)">
-              Choose Subject
-            </h2>
-
-            <p className="text-(--text)">
-              Pick a subject and let AI prepare personalized questions.
-            </p>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-4">
-            {quizSubjects.map((subject) => (
-              <div
-                key={subject.id}
-                className="flex w-full md:w-[calc(50%-0.5rem)] xl:w-[calc(25%-0.75rem)]"
-              >
-                <SubjectCard
-                  subject={subject}
-                  selected={selectedSubject?.id === subject.id}
-                  onSelect={handleSubjectSelect}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
-          <div className="flex flex-col gap-5">
-
+          <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
             <div className="flex flex-col gap-3">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
-                Step 3
+                Step 1
               </p>
 
               <h2 className="text-3xl font-black text-(--heading)">
-                Start Quiz
+                Choose Difficulty
               </h2>
 
               <p className="text-(--text)">
-                Review your selections and generate your AI quiz.
+                Select how challenging you want this quiz to be.
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
-              <div className="flex flex-wrap gap-3">
-                <InfoPill
-                  icon={Clock3}
-                  label="Estimated Duration"
-                  value={estimatedDuration}
+            <div className="mt-6 flex flex-wrap gap-3">
+              {quizDifficulties.map((difficulty) => (
+                <DifficultyCard
+                  key={difficulty.id}
+                  difficulty={difficulty}
+                  selected={selectedDifficulty === difficulty.id}
+                  onSelect={handleDifficultySelect}
                 />
+              ))}
+            </div>
+          </section>
 
-                <InfoPill
-                  icon={Sparkles}
-                  label="AI Generated"
-                  value="Unique Every Attempt"
-                />
-              </div>
+          <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
+            <div className="flex flex-col gap-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
+                Step 2
+              </p>
 
-              <button
-                type="button"
-                disabled={!canStart}
-                onClick={handleStartQuiz}
-                className={`inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 font-semibold transition-all duration-300 ${canStart
-                    ? "bg-(--btn-primary) text-white shadow-[0_12px_30px_rgba(0,0,0,0.25)] hover:scale-[1.02] hover:bg-(--btn-primary-hover)"
-                    : "cursor-not-allowed bg-(--tertiary) text-(--text-disabled)"
-                  }`}
-              >
-                {isGenerating ? (
-                  <>
-                    <LoaderCircle className="h-4 w-4 animate-spin" />
-                    Generating Quiz...
-                  </>
-                ) : (
-                  <>
-                    Start Quiz
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </button>
+              <h2 className="text-3xl font-black text-(--heading)">
+                Choose Subject
+              </h2>
+
+              <p className="text-(--text)">
+                Pick a subject and let AI prepare personalized questions.
+              </p>
             </div>
 
-            {errorMessage && (
-              <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                {errorMessage}
+            <div className="mt-6 flex flex-wrap gap-4">
+              {quizSubjects.map((subject) => (
+                <div
+                  key={subject.id}
+                  className="flex w-full md:w-[calc(50%-0.5rem)] xl:w-[calc(25%-0.75rem)]"
+                >
+                  <SubjectCard
+                    subject={subject}
+                    selected={selectedSubject?.id === subject.id}
+                    onSelect={handleSubjectSelect}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-(--border) bg-(--surface) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.35)] sm:p-7">
+            <div className="flex flex-col gap-5">
+
+              <div className="flex flex-col gap-3">
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-(--primary-400)">
+                  Step 3
+                </p>
+
+                <h2 className="text-3xl font-black text-(--heading)">
+                  Start Quiz
+                </h2>
+
+                <p className="text-(--text)">
+                  Review your selections and generate your AI quiz.
+                </p>
               </div>
-            )}
 
-          </div>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+                <div className="flex flex-wrap gap-3">
+                  <InfoPill
+                    icon={Clock3}
+                    label="Estimated Duration"
+                    value={estimatedDuration}
+                  />
+
+                  <InfoPill
+                    icon={Sparkles}
+                    label="AI Generated"
+                    value="Unique Every Attempt"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  disabled={!canStart}
+                  onClick={handleStartQuiz}
+                  className={`inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 font-semibold transition-all duration-300 ${canStart
+                    ? "bg-(--btn-primary) text-white shadow-[0_12px_30px_rgba(0,0,0,0.25)] hover:scale-[1.02] hover:bg-(--btn-primary-hover)"
+                    : "cursor-not-allowed bg-(--tertiary) text-(--text-disabled)"
+                    }`}
+                >
+                  {isGenerating ? (
+                    <>
+                      <LoaderCircle className="h-4 w-4 animate-spin" />
+                      Generating Quiz...
+                    </>
+                  ) : (
+                    <>
+                      Start Quiz
+                      <ArrowRight className="h-4 w-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {errorMessage && (
+                <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                  {errorMessage}
+                </div>
+              )}
+
+            </div>
+          </section>
+
         </section>
-
-      </section>
-    </QuizModuleShell>
+      </QuizModuleShell>
+    </>
   )
 }
 
