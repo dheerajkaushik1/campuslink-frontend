@@ -3,31 +3,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/</loc>
+        <loc>https://campuslink-college-notes.vercel.app/</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/notes</loc>
+        <loc>https://campuslink-college-notes.vercel.app/notes</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/syllabus</loc>
+        <loc>https://campuslink-college-notes.vercel.app/syllabus</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/papers</loc>
+        <loc>https://campuslink-college-notes.vercel.app/papers</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/quiz</loc>
+        <loc>https://campuslink-college-notes.vercel.app/quiz</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/quiz/leaderboard</loc>
+        <loc>https://campuslink-college-notes.vercel.app/quiz/leaderboard</loc>
     </url>
 
     <url>
-        <loc>https://campuslink-frontend-pi.vercel.app/meet-the-admin</loc>
+        <loc>https://campuslink-college-notes.vercel.app/meet-the-admin</loc>
     </url>
 
 </urlset>

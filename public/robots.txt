@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://campuslink-frontend-pi.vercel.app/sitemap.xml
+Sitemap: https://campuslink-college-notes.vercel.app

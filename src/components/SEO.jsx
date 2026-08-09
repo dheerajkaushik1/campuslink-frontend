@@ -5,7 +5,7 @@ export default function SEO({
   description,
   path = '/',
 }) {
-  const baseUrl = 'https://campuslink-frontend-pi.vercel.app'
+  const baseUrl = 'https://campuslink-college-notes.vercel.app'
   const url = `${baseUrl}${path}`
 
   return (
