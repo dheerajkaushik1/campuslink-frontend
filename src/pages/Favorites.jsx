@@ -14,13 +14,14 @@ export default function Favorites() {
     const fetchFavorites = async () => {
         try {
             setLoadingFavorites(true);
+
             const res = await API.get("/favorites");
 
             setFavorites({
-                notes: res.data?.notes || [],
+                notes: Array.isArray(res.data) ? res.data : res.data?.notes || [],
             });
         } catch (err) {
-            console.error(err);
+            console.error("Fetch favorites error:", err);
         } finally {
             setLoadingFavorites(false);
         }

@@ -12,13 +12,16 @@ API.interceptors.request.use((req) => {
     }
 
     return req;
-});
+    },
+    (error) => Promise.reject(error)
+);
 
 API.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem("token");
+            localStorage.removeItem("email");
             alert("Session expired. Please login again.");
             window.location.href = "/login";
         }
