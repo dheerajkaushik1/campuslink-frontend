@@ -29,6 +29,9 @@ export default function Favorites() {
 
     const handleRemoveFavorite = async (itemId) => {
         try {
+
+            setLoadingFavorites(true);
+
             await API.post(`/favorites/${itemId}`);
 
             setFavorites((prev) => ({
@@ -36,6 +39,8 @@ export default function Favorites() {
             }));
         } catch (err) {
             console.error(err);
+        } finally {
+            setLoadingFavorites(false);
         }
     };
 
