@@ -29,7 +29,7 @@ export default function Favorites() {
 
     const handleRemoveFavorite = async (itemId) => {
         try {
-            await API.post(`/favorites/note/${itemId}`);
+            await API.post(`/favorites/${itemId}`);
 
             setFavorites((prev) => ({
                 notes: prev.notes.filter((item) => item._id !== itemId),
