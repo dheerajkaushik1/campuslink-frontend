@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowRight, BrainCircuit, Clock3, LoaderCircle, Sparkles } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, BrainCircuit, Clock3, LoaderCircle, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SEO from '../../components/SEO'
 
@@ -20,6 +20,7 @@ export default function QuizHome() {
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const subjectScrollerRef = useRef(null);
 
   const estimatedDuration = useMemo(
     () => selectedSubject?.duration || "10-15 min",
@@ -52,6 +53,22 @@ export default function QuizHome() {
   const handleSubjectSelect = (subject) => {
     setSelectedSubject(subject);
     clearError();
+  };
+
+  const scrollSubjects = (direction) => {
+    subjectScrollerRef.current?.scrollBy({
+      left: direction * 320,
+      behavior: "smooth",
+    });
+  };
+
+  const handleSubjectWheel = (event) => {
+    const scroller = subjectScrollerRef.current;
+    if (!scroller) return;
+
+    event.preventDefault();
+    const horizontalDelta = (event.deltaX || event.deltaY) * 1.5;
+    scroller.scrollBy({ left: horizontalDelta });
   };
 
   const handleStartQuiz = async () => {
@@ -235,19 +252,47 @@ export default function QuizHome() {
               </p>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-4">
-              {quizSubjects.map((subject) => (
-                <div
-                  key={subject.id}
-                  className="flex w-full md:w-[calc(50%-0.5rem)] xl:w-[calc(25%-0.75rem)]"
+            <div className="relative mt-6">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex w-20 items-center bg-[linear-gradient(90deg,var(--surface)_20%,transparent)]">
+                <button
+                  type="button"
+                  aria-label="Show previous subjects"
+                  onClick={() => scrollSubjects(-1)}
+                  className="pointer-events-auto ml-2 rounded-full border border-emerald-300/40 bg-(--surface) p-3 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75),0_0_36px_rgba(16,185,129,0.35)] transition hover:scale-105 hover:bg-(--tertiary) hover:text-emerald-200"
                 >
-                  <SubjectCard
-                    subject={subject}
-                    selected={selectedSubject?.id === subject.id}
-                    onSelect={handleSubjectSelect}
-                  />
-                </div>
-              ))}
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div
+                ref={subjectScrollerRef}
+                onWheel={handleSubjectWheel}
+                className="flex gap-4 overflow-x-auto overflow-y-hidden overscroll-contain scroll-smooth px-1 pb-2"
+              >
+                {quizSubjects.map((subject) => (
+                  <div
+                    key={subject.id}
+                    className="flex w-[280px] shrink-0"
+                  >
+                    <SubjectCard
+                      subject={subject}
+                      selected={selectedSubject?.id === subject.id}
+                      onSelect={handleSubjectSelect}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 flex w-20 items-center justify-end bg-[linear-gradient(270deg,var(--surface)_20%,transparent)]">
+                <button
+                  type="button"
+                  aria-label="Show next subjects"
+                  onClick={() => scrollSubjects(1)}
+                  className="pointer-events-auto mr-2 rounded-full border border-emerald-300/40 bg-(--surface) p-3 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75),0_0_36px_rgba(16,185,129,0.35)] transition hover:scale-105 hover:bg-(--tertiary) hover:text-emerald-200"
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </section>
 

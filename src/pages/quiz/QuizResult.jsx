@@ -80,7 +80,6 @@ export default function QuizResult() {
         />
       </div>
 
-      {/* Incorrect Answers Review */}
       <div className="mt-8 rounded-[2rem] border border-white/50 bg-white/70 p-6 shadow-[0_24px_80px_rgba(79,70,229,0.12)] backdrop-blur-xl">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
