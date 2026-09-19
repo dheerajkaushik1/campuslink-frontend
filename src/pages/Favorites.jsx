@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CardImg from "../assets/card-img.png";
 import Loader from "../components/Loader";
 import API from "../api/api";
+import ResourceVisual from "../components/ResourceVisual";
 
 export default function Favorites() {
     const navigate = useNavigate();
@@ -72,13 +72,7 @@ export default function Favorites() {
             key={item._id}
             className="overflow-hidden rounded-[1.5rem] border border-(--border) bg-(--surface) shadow-[0_8px_24px_rgba(0,0,0,0.2)]"
         >
-            <div className="bg-(--tertiary) p-4">
-                <img
-                    src={CardImg}
-                    alt={`${item.title} cover`}
-                    className="h-36 w-full rounded-xl object-cover"
-                />
-            </div>
+            <ResourceVisual kind="favorites" />
 
             <div className="flex flex-col gap-4 p-5">
                 <div>

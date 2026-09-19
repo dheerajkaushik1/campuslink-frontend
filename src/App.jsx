@@ -25,29 +25,37 @@ function App() {
   const hideLayout = location.pathname === '/quiz/play'
 
   return (
-    <>
+    <div>
       {!hideLayout && <Navbar />}
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/notes' element={<Notes />} />
-        <Route path='/syllabus' element={<Syllabus />} />
-        <Route path='/papers' element={<PyP />} />
-        <Route path='/favorites' element={<Favorites />} />
-        <Route path='/quiz' element={<QuizHome />} />
-        <Route path='/quiz/play' element={<QuizPlay />} />
-        <Route path='/quiz/result' element={<QuizResult />} />
-        <Route path='/quiz/leaderboard' element={<QuizLeaderboard />} />
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/meet-the-admin' element={<MeetTheAdmin />} />
-        <Route path='/admin/requests' element={<ControlRequests />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/note-request' element={<NoteRequest />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+
+      <div className={!hideLayout ? 'pt-20' : ''}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/notes' element={<Notes />} />
+          <Route path='/syllabus' element={<Syllabus />} />
+          <Route path='/papers' element={<PyP />} />
+          <Route path='/favorites' element={<Favorites />} />
+
+          <Route path='/quiz' element={<QuizHome />} />
+          <Route path='/quiz/play' element={<QuizPlay />} />
+          <Route path='/quiz/result' element={<QuizResult />} />
+          <Route path='/quiz/leaderboard' element={<QuizLeaderboard />} />
+
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/meet-the-admin' element={<MeetTheAdmin />} />
+          <Route path='/admin/requests' element={<ControlRequests />} />
+
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/note-request' element={<NoteRequest />} />
+
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
+
       {!hideLayout && <Footer />}
-    </>
+    </div>
   )
 }
 

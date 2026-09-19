@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import API from "../api/api";
-import CardImg from '../assets/card-img.png';
 import Loader from "../components/Loader";
+import ResourceVisual from "../components/ResourceVisual";
 import { useNavigate } from "react-router-dom";
 import SEO from '../components/SEO'
 
 export default function Notes() {
-    const CARDS_PER_PAGE = 6;
+    const CARDS_PER_PAGE = 9;
     const navigate = useNavigate();
     const [notes, setNotes] = useState([]);
     const [query, setQuery] = useState("");
@@ -264,21 +264,15 @@ export default function Notes() {
                         </div>
                     ) : (
                         <>
-                            <div className="flex flex-wrap gap-4">
+                            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                                 {paginatedNotes.map((note) => (
                                     <div
                                         key={note._id}
-                                        className="group flex w-full flex-col overflow-hidden rounded-[1.4rem] border border-(--border) bg-(--surface) transition-all duration-300 hover:-translate-y-2 hover:border-(--primary-500) hover:shadow-[0_20px_45px_rgba(0,0,0,0.35)] md:w-[calc(50%-0.5rem)] xl:w-[calc(33.333%-0.75rem)]"
+                                        className="group flex min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-(--border) bg-(--surface) transition-all duration-300 hover:-translate-y-2 hover:border-(--primary-500) hover:shadow-[0_20px_45px_rgba(34,211,238,0.2)]"
                                     >
-                                        <div className="relative bg-(--tertiary) p-3">
-                                            <img
-                                                src={CardImg}
-                                                alt="Note cover"
-                                                className="h-32 w-full rounded-lg object-cover transition duration-300 group-hover:scale-[1.03]"
-                                            />
-                                        </div>
+                                        <ResourceVisual kind="notes" compact />
 
-                                        <div className="flex flex-1 flex-col gap-3 p-4">
+                                        <div className="flex flex-1 flex-col gap-2.5 p-3">
 
                                             <div className="flex items-start justify-between gap-3">
 
@@ -288,7 +282,7 @@ export default function Notes() {
                                                         {note.subject}
                                                     </span>
 
-                                                    <h2 className="line-clamp-2 text-lg font-bold text-(--heading)">
+                                                    <h2 className="line-clamp-2 text-base font-bold text-(--heading)">
                                                         {note.title}
                                                     </h2>
 
@@ -307,7 +301,7 @@ export default function Notes() {
 
                                             </div>
 
-                                            <p className="line-clamp-3 text-sm leading-5 text-(--text)">
+                                            <p className="line-clamp-2 text-sm leading-5 text-(--text)">
                                                 {note.description}
                                             </p>
 
@@ -321,7 +315,7 @@ export default function Notes() {
                                                 </span>
                                             </div>
 
-                                            <div className="rounded-lg border border-(--border) bg-(--tertiary) p-3 text-sm text-(--text)">
+                                            <div className="rounded-lg border border-(--border) bg-(--tertiary) p-2.5 text-xs text-(--text)">
                                                 <p className="mb-1.5">
                                                     <span className="font-semibold text-(--heading)">
                                                         Updated:
@@ -341,14 +335,14 @@ export default function Notes() {
 
                                                 <button
                                                     onClick={() => handleOpen(note)}
-                                                    className="flex-1 rounded-lg bg-(--btn-secondary) py-2.5 font-semibold text-white transition hover:bg-slate-600"
+                                                    className="flex-1 rounded-lg bg-(--btn-secondary) py-2 font-semibold text-white transition hover:bg-slate-600"
                                                 >
                                                     Open
                                                 </button>
 
                                                 <button
                                                     onClick={() => handleDownload(note)}
-                                                    className="flex-1 rounded-lg bg-(--btn-primary) py-2.5 font-semibold text-white transition hover:bg-(--btn-primary-hover)"
+                                                    className="flex-1 rounded-lg bg-(--btn-primary) py-2 font-semibold text-white transition hover:bg-(--btn-primary-hover)"
                                                 >
                                                     Download
                                                 </button>

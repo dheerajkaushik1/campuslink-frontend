@@ -16,20 +16,23 @@ import {
 import * as Icons from "lucide-react";
 
 const glassPanel =
-  "rounded-[2rem] border border-white/45 bg-white/70 shadow-[0_24px_80px_rgba(79,70,229,0.16)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/55 dark:border-white/12 dark:bg-slate-950/60";
+  "rounded-[2rem] border border-cyan-200/15 bg-[#0b1426]/70 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-2xl";
 
 const subtlePanel =
-  "rounded-[1.6rem] border border-white/50 bg-white/72 shadow-[0_18px_60px_rgba(99,102,241,0.12)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/58 dark:border-white/12 dark:bg-slate-950/55";
+  "rounded-[1.6rem] border border-cyan-200/12 bg-[#101a2e]/65 shadow-[0_18px_60px_rgba(0,0,0,0.2)] backdrop-blur-xl";
 
-const resolveIcon = (iconName) => Icons[iconName] || BrainCircuit;
+const resolveIcon = (iconName, className) => {
+  const Icon = Icons[iconName] || BrainCircuit;
+  return <Icon className={className} />;
+};
 
 export function QuizModuleShell({ children, className = "" }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#eef4ff_0%,#f6f2ff_42%,#f8fbff_100%)] text-slate-900 dark:bg-[linear-gradient(180deg,#0f172a_0%,#111827_48%,#0f172a_100%)] dark:text-white">
+    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_10%_0%,rgba(34,211,238,0.16),transparent_28%),radial-gradient(circle_at_90%_18%,rgba(217,70,239,0.12),transparent_26%),linear-gradient(180deg,#050816_0%,#0b1426_52%,#050816_100%)] text-slate-100">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-10%] top-[-8rem] h-72 w-72 rounded-full bg-sky-400/25 blur-3xl" />
-        <div className="absolute right-[-6%] top-[10%] h-80 w-80 rounded-full bg-violet-400/22 blur-3xl" />
-        <div className="absolute bottom-[-6rem] left-[18%] h-64 w-64 rounded-full bg-indigo-300/22 blur-3xl" />
+        <div className="absolute left-[-10%] top-[-8rem] h-72 w-72 rounded-full bg-cyan-400/12 blur-3xl" />
+        <div className="absolute right-[-6%] top-[10%] h-80 w-80 rounded-full bg-fuchsia-400/10 blur-3xl" />
+        <div className="absolute bottom-[-6rem] left-[18%] h-64 w-64 rounded-full bg-violet-300/9 blur-3xl" />
       </div>
       <div className={`relative mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ${className}`}>{children}</div>
     </div>
@@ -40,12 +43,12 @@ export function QuizNavbar({ title, subtitle, actions }) {
   return (
     <div className={`${glassPanel} animate-slide-up mb-8 flex flex-col gap-4 px-5 py-5 sm:px-7 lg:flex-row lg:items-center lg:justify-between`}>
       <div>
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-indigo-200/80 bg-indigo-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-indigo-700 dark:border-indigo-400/20 dark:text-indigo-200">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">
           <Sparkles className="h-3.5 w-3.5" />
           AI Quiz Module
         </div>
-        <h1 className="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">{title}</h1>
-        {subtitle && <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-300">{subtitle}</p>}
+        <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">{title}</h1>
+        {subtitle && <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-300/70 sm:text-base">{subtitle}</p>}
       </div>
       {actions ? <div className="flex flex-wrap gap-3">{actions}</div> : null}
     </div>
@@ -53,7 +56,6 @@ export function QuizNavbar({ title, subtitle, actions }) {
 }
 
 export function StatisticCard({ label, value, helper, icon: iconName, accent = "from-sky-500 to-indigo-500" }) {
-  const Icon = resolveIcon(iconName);
   return (
     <div className={`${subtlePanel} group animate-slide-up p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(79,70,229,0.18)]`}>
       <div className="flex items-start justify-between gap-4">
@@ -63,7 +65,7 @@ export function StatisticCard({ label, value, helper, icon: iconName, accent = "
           {helper ? <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{helper}</p> : null}
         </div>
         <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} text-white shadow-lg`}>
-          <Icon className="h-5 w-5" />
+          {resolveIcon(iconName, "h-5 w-5")}
         </div>
       </div>
     </div>
@@ -71,7 +73,6 @@ export function StatisticCard({ label, value, helper, icon: iconName, accent = "
 }
 
 export function SubjectCard({ subject, selected, onSelect }) {
-  const Icon = resolveIcon(subject.icon);
   return (
     <button
       type="button"
@@ -82,7 +83,7 @@ export function SubjectCard({ subject, selected, onSelect }) {
       <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${subject.accent}`} />
       <div className="flex items-start justify-between gap-4">
         <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${subject.accent} text-white shadow-lg`}>
-          <Icon className="h-5 w-5" />
+          {resolveIcon(subject.icon, "h-5 w-5")}
         </div>
         {selected ? <BadgeCheck className="h-5 w-5 text-indigo-600 dark:text-indigo-300" /> : null}
       </div>
@@ -119,7 +120,7 @@ export function SearchBar({ value, onChange, placeholder = "Search..." }) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-white/60 bg-white/75 py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-200 dark:border-white/10 dark:bg-slate-950/40 dark:text-white dark:placeholder:text-slate-500"
+        className="w-full rounded-2xl border border-cyan-100/15 bg-black/20 py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/60 focus:ring-4 focus:ring-cyan-400/10"
       />
     </label>
   );
@@ -450,8 +451,17 @@ export function ToastNotification({ toast, onClose }) {
 export function PodiumCard({ entry, tone, icon = Medal }) {
   const Icon = icon;
   return (
-    <div className={`${subtlePanel} relative overflow-hidden p-5 text-center`}>
+    <div
+      tabIndex="0"
+      className={`${subtlePanel} group relative z-0 overflow-visible p-5 text-center outline-none transition duration-300 hover:z-30 hover:-translate-y-2 hover:border-cyan-300/45 hover:shadow-[0_24px_70px_rgba(34,211,238,0.22)] focus:z-30 focus-visible:ring-2 focus-visible:ring-cyan-300/70`}
+    >
       <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${tone}`} />
+      <div className="pointer-events-none absolute -right-2 -top-2 opacity-0 transition duration-300 group-hover:opacity-100 group-focus:opacity-100">
+        <Sparkles className="h-5 w-5 animate-pulse text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
+      </div>
+      <div className="pointer-events-none absolute -bottom-2 -left-2 opacity-0 transition duration-300 group-hover:opacity-100 group-focus:opacity-100">
+        <Sparkles className="h-4 w-4 animate-pulse text-fuchsia-300 drop-shadow-[0_0_10px_rgba(217,70,239,0.9)]" />
+      </div>
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950">
         <Icon className="h-6 w-6" />
       </div>
@@ -460,6 +470,17 @@ export function PodiumCard({ entry, tone, icon = Medal }) {
       <p className="mt-2 text-3xl font-black text-slate-950 dark:text-white">{entry.score}</p>
       <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{entry.subject} • {entry.difficulty}</p>
       <p className="mt-3 text-sm font-semibold text-indigo-600 dark:text-indigo-300">{entry.percentage}% Accuracy</p>
+      <div className="pointer-events-none absolute left-1/2 top-full z-20 mt-3 w-[min(86vw,280px)] -translate-x-1/2 translate-y-2 rounded-2xl border border-cyan-300/35 bg-[#081226]/95 p-4 text-left opacity-0 shadow-[0_18px_55px_rgba(34,211,238,0.22)] backdrop-blur-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100">
+        <div className="flex items-start gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
+            <Sparkles className="h-4 w-4" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-white">Congratulations, {entry.name}!</p>
+            <p className="mt-1 text-xs leading-5 text-slate-300">You secured rank #{entry.rank} on the CampusLink leaderboard.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

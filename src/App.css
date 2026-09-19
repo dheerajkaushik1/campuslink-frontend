@@ -6,37 +6,37 @@ body {
 }
 
 :root{
-    --primary-50: #ECFDF5;
-    --primary-100: #D1FAE5;
-    --primary-200: #A7F3D0;
-    --primary-300: #6EE7B7;
-    --primary-400: #34D399;
-    --primary-500: #10B981;
-    --primary-600: #059669;
-    --primary-700: #047857;
-    --primary-800: #065F46;
-    --primary-900: #064E3B;
+    --primary-50: #eef2ff;
+    --primary-100: #dbeafe;
+    --primary-200: #bae6fd;
+    --primary-300: #67e8f9;
+    --primary-400: #22d3ee;
+    --primary-500: #06b6d4;
+    --primary-600: #2563eb;
+    --primary-700: #4f46e5;
+    --primary-800: #7c3aed;
+    --primary-900: #312e81;
 
-    --primary: #0B1114;
-    --secondary: #121A1F;
-    --tertiary: #182228;
+    --primary: #050816;
+    --secondary: #081226;
+    --tertiary: #0c1830;
 
-    --text: #CBD5E1;
-    --text-muted: #94A3B8;
-    --text-disabled: #64748B;
+    --text: #c7d2fe;
+    --text-muted: #94a3c7;
+    --text-disabled: #64748b;
     --heading: #F8FAFC;
-    --subheading: #E2E8F0;
+    --subheading: #e0e7ff;
 
-    --border: #314048;
-    --border-light: #3B4952;
+    --border: rgba(125, 211, 252, 0.17);
+    --border-light: rgba(103, 232, 249, 0.42);
 
-    --surface: #1F2A30;
-    --surface-secondary: #27343B;
+    --surface: #0b1426;
+    --surface-secondary: #101a2e;
 
-    --btn-primary: #10B981;
-    --btn-primary-hover: #059669;
-    --btn-primary-active: #047857;
-    --btn-secondary: #223038;
+    --btn-primary: #2563eb;
+    --btn-primary-hover: #06b6d4;
+    --btn-primary-active: #4f46e5;
+    --btn-secondary: #111d33;
 
     --success: #22C55E;
     --warning: #FBBF24;
@@ -44,10 +44,176 @@ body {
 }
 
 body {
-    background: var(--primary);
+    background:
+        radial-gradient(circle at 10% -4%, rgba(37, 99, 235, 0.2), transparent 28rem),
+        radial-gradient(circle at 90% 12%, rgba(217, 70, 239, 0.13), transparent 26rem),
+        var(--primary);
     color: var(--text);
+    min-width: 320px;
 }
 
 #root {
     min-height: 100vh;
+    position: relative;
+}
+
+#root::before {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    content: "";
+    opacity: 0.42;
+    background-image: linear-gradient(rgba(103, 232, 249, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.035) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+button,
+a,
+input,
+select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+    transition-duration: 220ms;
+    transition-timing-function: ease-out;
+}
+
+button:not(:disabled):hover,
+a:hover,
+[role="button"]:hover {
+    transform: translateY(-1px);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: rgba(103, 232, 249, 0.32);
+}
+
+button:active,
+a:active {
+    transform: translateY(1px) scale(0.985);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12), 0 0 28px rgba(124, 58, 237, 0.12);
+}
+
+.neon-shell {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(180deg, rgba(5, 8, 22, 0.2), rgba(5, 8, 22, 0.92));
+}
+
+.hero-photo {
+    background-image: linear-gradient(90deg, rgba(5, 8, 22, 0.98) 0%, rgba(5, 8, 22, 0.78) 38%, rgba(5, 8, 22, 0.28) 72%, rgba(5, 8, 22, 0.55) 100%), url('/campuslink-hero.png'), radial-gradient(circle at 72% 45%, rgba(37, 99, 235, 0.32), transparent 34%), linear-gradient(135deg, #0d1637, #050816 72%);
+    background-position: center;
+    background-size: cover;
+}
+
+.neon-shell::before,
+.neon-shell::after {
+    position: absolute;
+    z-index: -1;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 999px;
+    content: "";
+    filter: blur(90px);
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.neon-shell::before {
+    top: 4rem;
+    left: -16rem;
+    background: #06b6d4;
+}
+
+.neon-shell::after {
+    right: -16rem;
+    bottom: 4rem;
+    background: #d946ef;
+}
+
+.neon-panel {
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    background: linear-gradient(145deg, rgba(16, 26, 46, 0.82), rgba(8, 18, 38, 0.68));
+    box-shadow: 0 24px 90px rgba(0, 0, 0, 0.3), inset 0 1px rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(24px);
+}
+
+.gradient-text {
+    background: linear-gradient(100deg, #67e8f9 5%, #60a5fa 38%, #c084fc 72%, #f0abfc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.neon-button {
+    background: linear-gradient(105deg, #06b6d4, #2563eb 48%, #7c3aed);
+    box-shadow: 0 12px 36px rgba(37, 99, 235, 0.3), inset 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.neon-button:hover {
+    box-shadow: 0 16px 48px rgba(34, 211, 238, 0.34), inset 0 1px rgba(255, 255, 255, 0.45);
+    filter: saturate(1.15) brightness(1.08);
+}
+
+.neon-orbit {
+    animation: neon-orbit 16s linear infinite;
+}
+
+/* Legacy page wrappers keep their behavior but inherit the new atmosphere. */
+[class*="#243039"] {
+    background-image: radial-gradient(circle at 85% 15%, rgba(217, 70, 239, 0.14), transparent 28%), linear-gradient(135deg, #101a2e, #071126 72%) !important;
+}
+
+[class*="rgba(16,185,129"] {
+    background-image: radial-gradient(circle at 75% 20%, rgba(34, 211, 238, 0.14), transparent 30%), radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.12), transparent 35%) !important;
+}
+
+[class*="rgba(5,150,105"] {
+    background-image: radial-gradient(circle at 70% 20%, rgba(99, 102, 241, 0.12), transparent 32%) !important;
+}
+
+@keyframes neon-orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    main,
+    section {
+        animation: page-reveal 520ms ease-out both;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@keyframes page-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

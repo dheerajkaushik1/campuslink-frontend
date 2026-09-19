@@ -2,7 +2,9 @@
 
 :root {
   color-scheme: dark;
-  font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -11,6 +13,22 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  color: #eef2ff;
+  background: rgba(99, 102, 241, 0.42);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.025em;
+}
+
+img {
+  max-width: 100%;
 }
 
 button,
@@ -37,6 +55,17 @@ select {
 
 .animate-float-soft {
   animation: float-soft 4.8s ease-in-out infinite;
+}
+
+.glass-surface {
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  background: linear-gradient(145deg, rgba(16, 26, 46, 0.88), rgba(8, 18, 38, 0.72));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(20px);
+}
+
+.premium-glow {
+  box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.16), 0 20px 55px rgba(99, 102, 241, 0.2);
 }
 
 @keyframes quiz-shimmer {
