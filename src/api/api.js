@@ -1,4 +1,5 @@
 import axios from "axios";
+import { notify } from "../components/alertBus";
 
 const API = axios.create({
     baseURL: "https://campuslink-backend-wv2h.onrender.com/api",
@@ -22,7 +23,7 @@ API.interceptors.response.use(
         if (error.response?.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("email");
-            alert("Session expired. Please login again.");
+            notify("Your session expired. Please login again.", "error", "Session expired");
             window.location.href = "/login";
         }
 

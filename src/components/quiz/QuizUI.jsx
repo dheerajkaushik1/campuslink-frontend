@@ -429,17 +429,18 @@ export function ToastNotification({ toast, onClose }) {
         : "from-rose-500 to-pink-500";
 
   return (
-    <div className="fixed right-4 top-4 z-[95] w-[min(92vw,360px)] animate-slide-up">
-      <div className="rounded-[1.6rem] border border-white/60 bg-white/90 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-950/90">
-        <div className="flex items-start gap-3">
-          <div className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${tone} text-white`}>
+    <div className="fixed right-4 top-4 z-[100001] w-[min(92vw,390px)] animate-slide-up">
+      <div className="relative overflow-hidden rounded-[1.35rem] border border-cyan-200/25 bg-[#0b1426]/95 p-4 text-white shadow-[0_24px_80px_rgba(0,0,0,0.45),0_0_36px_rgba(99,102,241,0.2)] backdrop-blur-2xl">
+        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tone}`} />
+        <div className="flex items-start gap-3 pt-1">
+          <div className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${tone} text-white`}>
             {toast.type === "success" ? <CheckCircle2 className="h-4 w-4" /> : toast.type === "warning" ? <AlertTriangle className="h-4 w-4" /> : <X className="h-4 w-4" />}
           </div>
           <div className="flex-1">
-            <p className="font-bold text-slate-950 dark:text-white">{toast.title}</p>
-            <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{toast.message}</p>
+            <p className="font-bold text-white">{toast.title}</p>
+            <p className="mt-1 text-sm leading-6 text-slate-300">{toast.message}</p>
           </div>
-          <button type="button" onClick={onClose} className="rounded-xl p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white">
+          <button type="button" onClick={onClose} className="rounded-xl p-1 text-slate-400 transition hover:bg-white/10 hover:text-white">
             <X className="h-4 w-4" />
           </button>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import Loader from "../components/Loader";
+import { notify } from "../components/alertBus";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
-            alert("Please login first");
+            notify("Please login first to view your profile.", "warning", "Login required");
             navigate("/login");
             return;
         }

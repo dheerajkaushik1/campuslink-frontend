@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { notify } from "../components/alertBus";
 
 const signupHighlights = [
     "Create your CampusLink account in a cleaner, more focused flow.",
@@ -27,11 +28,11 @@ export default function Signup() {
             setLoadingSignup(true);
             setErrorMessage("");
             await API.post("/auth/signup", { email, password, name });
-            alert("Account created successfully. Please login.");
+            notify("Account created successfully. Please login.", "success", "Account ready");
             navigate("/login");
         } catch (err) {
             setErrorMessage(err?.response?.data?.message || "Error signing up");
-            alert(err?.response?.data?.message || "Error signing up");
+            notify(err?.response?.data?.message || "Error signing up", "error", "Signup failed");
         } finally {
             setLoadingSignup(false);
         }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { notify } from "../components/alertBus";
 
 const loginHighlights = [
     "Access your saved study flow in one place.",
@@ -29,12 +30,12 @@ export default function Login() {
             const res = await API.post("auth/login", { email, password });
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("email", res.data.user.email);
-            alert(res.data.message);
+            notify(res.data.message, "success", "Welcome back");
             navigate("/notes");
             window.location.reload();
         } catch (err) {
             setErrorMessage(err?.response?.data?.message || "Unable to login right now.");
-            alert(err?.response?.data?.message || "Unable to login right now.");
+            notify(err?.response?.data?.message || "Unable to login right now.", "error", "Login failed");
         } finally {
             setLoadingLogin(false);
         }

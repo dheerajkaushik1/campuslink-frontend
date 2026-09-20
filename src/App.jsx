@@ -19,6 +19,7 @@ import QuizHome from './pages/quiz/QuizHome'
 import QuizPlay from './pages/quiz/QuizPlay'
 import QuizResult from './pages/quiz/QuizResult'
 import QuizLeaderboard from './pages/quiz/QuizLeaderboard'
+import AlertHost from './components/AlertNotification'
 
 function App() {
   const location = useLocation()
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div>
+      <AlertHost />
       {!hideLayout && <Navbar />}
 
       <div className={!hideLayout ? 'pt-20' : ''}>

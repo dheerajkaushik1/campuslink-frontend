@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import Loader from "../components/Loader";
+import { notify } from "../components/alertBus";
 
 const requestHighlights = [
     "Review incoming note requests in one place without leaving the admin workspace.",
@@ -23,13 +24,13 @@ export default function ControlRequests() {
         const email = localStorage.getItem("email");
 
         if (!token) {
-            alert("Please login first");
+            notify("Please login first to access requests.", "warning", "Login required");
             navigate("/login");
             return;
         }
 
         if (email !== "dheerajkaushik428@gmail.com") {
-            alert("Access denied. Admins only.");
+            notify("This area is restricted to administrators.", "error", "Access denied");
             navigate("/notes");
             return;
         }

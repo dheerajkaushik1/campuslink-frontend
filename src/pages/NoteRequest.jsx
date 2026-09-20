@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../api/api";
+import { notify } from "../components/alertBus";
 
 const requestHighlights = [
     "Ask for a missing topic, chapter, or subject without hunting down the admin manually.",
@@ -45,13 +46,13 @@ export default function NoteRequest() {
             });
 
             setSuccessMessage("Request submitted successfully. Admin will review it soon.");
-            alert("Request submitted. Admin will review and get back to you soon.");
+            notify("Request submitted. Admin will review and get back to you soon.", "success", "Request submitted");
             setTopic("");
             setDescription("");
         } catch (err) {
             const message = err?.response?.data?.message || "Error submitting note request. Please try again later.";
             setErrorMessage(message);
-            alert(message);
+            notify(message, "error", "Request failed");
         } finally {
             setLoading(false);
         }

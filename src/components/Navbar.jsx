@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { BookOpen, BrainCircuit, FileText, Flag, Heart, House, ListChecks, Menu, ShieldCheck, UserRound, Sparkles, X } from "lucide-react";
+import { BookOpen, BrainCircuit, FileText, Flag, Heart, House, ListChecks, LogOut, Menu, ShieldCheck, UserRound, X } from "lucide-react";
+import { notify } from "./alertBus";
 
 const primaryLinks = [
     { to: "/", label: "Home", icon: House },
@@ -34,7 +35,7 @@ export default function Navbar() {
         try {
             setLoadingLogout(true);
             localStorage.removeItem("token");
-            alert("Logged out successfully");
+            notify("Logged out successfully", "success", "Signed out");
             setIsLoggedIn(false);
             navigate("/login");
         } catch (error) {
@@ -51,11 +52,11 @@ export default function Navbar() {
         }`;
 
     const authLinks = isLoggedIn ? (
-        <div className="flex items-center gap-2">
-            {isAdmin && <NavLink to="/admin" className={navLinkClassName}><ShieldCheck className="h-4 w-4" />Admin</NavLink>}
-            <NavLink to="/profile" className={navLinkClassName}><Sparkles className="h-4 w-4" />Profile</NavLink>
-            <button type="button" onClick={handleLogout} className="neon-button rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-white">
-                {loadingLogout ? "Logging out..." : "Logout"}
+        <div className="flex items-center gap-1.5">
+            {isAdmin && <NavLink to="/admin" aria-label="Open admin" title="Admin" className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/8 hover:text-fuchsia-200"><ShieldCheck className="h-4 w-4" /></NavLink>}
+            <NavLink to="/profile" aria-label="Open profile" title="Profile" className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/8 hover:text-cyan-200"><UserRound className="h-4 w-4" /></NavLink>
+            <button type="button" onClick={handleLogout} aria-label={loadingLogout ? "Logging out" : "Logout"} title={loadingLogout ? "Logging out" : "Logout"} className="neon-button flex h-9 w-9 items-center justify-center rounded-full text-white">
+                <LogOut className="h-3.5 w-3.5" />
             </button>
         </div>
     ) : (
@@ -84,9 +85,7 @@ export default function Navbar() {
 
                 <div className="hidden items-center gap-2 sm:flex">
                     <NavLink to="/favorites" aria-label="Favorites" className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/8 hover:text-fuchsia-200"><Heart className="h-4 w-4" /></NavLink>
-                    {isLoggedIn && <NavLink to="/profile" aria-label="Open profile" className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/8 hover:text-cyan-200"><UserRound className="h-4 w-4" /></NavLink>}
-                    {isLoggedIn && isAdmin && <NavLink to="/admin" aria-label="Open admin" className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/8 hover:text-fuchsia-200"><ShieldCheck className="h-4 w-4" /></NavLink>}
-                    <div className="hidden xl:block">{authLinks}</div>
+                    <div className="hidden lg:block">{authLinks}</div>
                 </div>
 
                 <button type="button" onClick={() => setIsSidebarOpen(true)} aria-label="Open menu" className="flex h-9 w-9 items-center justify-center rounded-full bg-white/8 text-white lg:hidden"><Menu className="h-4 w-4" /></button>
