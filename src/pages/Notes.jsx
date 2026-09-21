@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import API from "../api/api";
 import Loader from "../components/Loader";
 import ResourceVisual from "../components/ResourceVisual";
+import ResourceFilterSidebar from "../components/ResourceFilterSidebar";
 import { useNavigate } from "react-router-dom";
 import SEO from '../components/SEO'
 
@@ -15,6 +16,7 @@ export default function Notes() {
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [favoriteIds, setFavoriteIds] = useState([]);
+    const [selectedSubject, setSelectedSubject] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -119,13 +121,25 @@ export default function Notes() {
         }
     }
 
+    const subjectOptions = useMemo(() => (
+        [...new Set(notes.map((note) => note.subject).filter(Boolean))]
+            .sort((firstSubject, secondSubject) => firstSubject.localeCompare(secondSubject))
+            .map((subject) => ({ value: subject, label: subject }))
+    ), [notes]);
+
+    const filteredNotes = useMemo(() => (
+        selectedSubject
+            ? notes.filter((note) => note.subject === selectedSubject)
+            : notes
+    ), [notes, selectedSubject]);
+
     if (loadingNotes || loadingSearch || loadingFav) {
         return <Loader />;
     }
 
-    const totalPages = Math.ceil(notes.length / CARDS_PER_PAGE);
+    const totalPages = Math.ceil(filteredNotes.length / CARDS_PER_PAGE);
     const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
-    const paginatedNotes = notes.slice(startIndex, startIndex + CARDS_PER_PAGE);
+    const paginatedNotes = filteredNotes.slice(startIndex, startIndex + CARDS_PER_PAGE);
 
     const visiblePageNumbers = [];
     for (let page = 1; page <= totalPages; page++) {
@@ -168,7 +182,7 @@ export default function Notes() {
                                 <div className="flex flex-wrap gap-3 text-sm">
 
                                     <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
-                                        📚 {notes.length} Notes
+                                        📚 {filteredNotes.length} Notes
                                     </span>
 
                                     <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
@@ -226,7 +240,7 @@ export default function Notes() {
                                 <div className="mt-4 flex flex-wrap items-center gap-3">
 
                                     <span className="rounded-full border border-(--border) bg-(--tertiary) px-4 py-2 text-sm text-(--text)">
-                                        Showing {notes.length === 0 ? 0 : startIndex + 1}-{Math.min(startIndex + CARDS_PER_PAGE, notes.length)}
+                                        Showing {filteredNotes.length === 0 ? 0 : startIndex + 1}-{Math.min(startIndex + CARDS_PER_PAGE, filteredNotes.length)}
                                     </span>
 
                                     <button
@@ -251,14 +265,29 @@ export default function Notes() {
 
                     </section>
 
-                    {notes.length <= 0 ? (
+                    <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start">
+                        <ResourceFilterSidebar
+                            title="Subjects"
+                            allLabel="All Subjects"
+                            options={subjectOptions}
+                            selectedValue={selectedSubject}
+                            onSelect={(subject) => {
+                                setSelectedSubject(subject);
+                                setCurrentPage(1);
+                            }}
+                        />
+
+                        <div className="min-w-0">
+                    {filteredNotes.length <= 0 ? (
                         <div className="flex min-h-[280px] items-center justify-center rounded-[2rem] border border-dashed border-(--border) bg-(--surface) px-6 text-center shadow-lg">
                             <div>
                                 <h2 className="mb-2 text-2xl font-bold text-(--heading)">
-                                    📚 No Notes Found
+                                    {selectedSubject ? "No Notes For This Subject" : "📚 No Notes Found"}
                                 </h2>
                                 <p className="text-(--text)">
-                                    There are no notes available at the moment. Try another search or request missing notes.
+                                    {selectedSubject
+                                        ? "No notes available for this subject yet."
+                                        : "There are no notes available at the moment. Try another search or request missing notes."}
                                 </p>
                             </div>
                         </div>
@@ -390,6 +419,8 @@ export default function Notes() {
 
                         </div>
                     )}
+                        </div>
+                    </div>
 
                     <div className="rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] p-8 text-center shadow-[0_20px_45px_rgba(0,0,0,0.35)]">
 

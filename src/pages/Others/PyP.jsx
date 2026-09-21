@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/api";
 import Loader from "../../components/Loader";
 import ResourceVisual from "../../components/ResourceVisual";
+import ResourceFilterSidebar from "../../components/ResourceFilterSidebar";
 import SEO from '../../components/SEO'
 
 export default function PyP() {
@@ -13,6 +14,7 @@ export default function PyP() {
     const [loadingPapers, setLoadingPapers] = useState(false);
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedSemester, setSelectedSemester] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -73,13 +75,25 @@ export default function PyP() {
         }
     };
 
+    const semesterOptions = useMemo(() => (
+        [...new Set(papers.map((paper) => paper.semester).filter((semester) => semester !== undefined && semester !== null && semester !== ""))]
+            .sort((firstSemester, secondSemester) => String(firstSemester).localeCompare(String(secondSemester), undefined, { numeric: true }))
+            .map((semester) => ({ value: String(semester), label: `Semester ${semester}` }))
+    ), [papers]);
+
+    const filteredPapers = useMemo(() => (
+        selectedSemester
+            ? papers.filter((paper) => String(paper.semester) === selectedSemester)
+            : papers
+    ), [papers, selectedSemester]);
+
     if (loadingPapers || loadingSearch) {
         return <Loader />;
     }
 
-    const totalPages = Math.ceil(papers.length / CARDS_PER_PAGE);
+    const totalPages = Math.ceil(filteredPapers.length / CARDS_PER_PAGE);
     const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
-    const paginatedPapers = papers.slice(startIndex, startIndex + CARDS_PER_PAGE);
+    const paginatedPapers = filteredPapers.slice(startIndex, startIndex + CARDS_PER_PAGE);
     const visiblePageNumbers = [];
 
     for (let page = 1; page <= totalPages; page++) {
@@ -116,7 +130,7 @@ export default function PyP() {
 
                                 <div className="flex flex-wrap gap-3 text-sm">
                                     <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
-                                        {papers.length} Papers
+                                        {filteredPapers.length} Papers
                                     </span>
 
                                     <span className="rounded-full border border-(--border) bg-(--surface) px-4 py-2 text-(--text)">
@@ -162,7 +176,7 @@ export default function PyP() {
 
                                 <div className="mt-4 flex flex-wrap items-center gap-3">
                                     <span className="rounded-full border border-(--border) bg-(--tertiary) px-4 py-2 text-sm text-(--text)">
-                                        Showing {papers.length === 0 ? 0 : startIndex + 1}-{Math.min(startIndex + CARDS_PER_PAGE, papers.length)}
+                                        Showing {filteredPapers.length === 0 ? 0 : startIndex + 1}-{Math.min(startIndex + CARDS_PER_PAGE, filteredPapers.length)}
                                     </span>
 
                                     <button
@@ -176,14 +190,29 @@ export default function PyP() {
                         </div>
                     </section>
 
-                    {papers.length <= 0 ? (
+                    <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start">
+                        <ResourceFilterSidebar
+                            title="Semesters"
+                            allLabel="All Semesters"
+                            options={semesterOptions}
+                            selectedValue={selectedSemester}
+                            onSelect={(semester) => {
+                                setSelectedSemester(semester);
+                                setCurrentPage(1);
+                            }}
+                        />
+
+                        <div className="min-w-0">
+                    {filteredPapers.length <= 0 ? (
                         <div className="flex min-h-[280px] items-center justify-center rounded-[2rem] border border-dashed border-(--border) bg-(--surface) px-6 text-center shadow-lg">
                             <div>
                                 <h2 className="mb-2 text-2xl font-bold text-(--heading)">
-                                    No Previous Year Papers Found
+                                    {selectedSemester ? "No Papers For This Semester" : "No Previous Year Papers Found"}
                                 </h2>
                                 <p className="text-(--text)">
-                                    There are no papers available right now. Try another search and check back soon.
+                                    {selectedSemester
+                                        ? "No papers available for this semester yet."
+                                        : "There are no papers available right now. Try another search and check back soon."}
                                 </p>
                             </div>
                         </div>
@@ -299,6 +328,8 @@ export default function PyP() {
                             </button>
                         </div>
                     )}
+                        </div>
+                    </div>
 
                     <div className="rounded-[2rem] border border-(--border) bg-[linear-gradient(180deg,#243039_0%,#1B252B_100%)] p-8 text-center shadow-[0_20px_45px_rgba(0,0,0,0.35)]">
                         <span className="inline-block rounded-full bg-(--tertiary) px-4 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-(--primary-400)">

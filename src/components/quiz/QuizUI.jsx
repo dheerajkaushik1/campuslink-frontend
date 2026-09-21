@@ -208,7 +208,7 @@ export function OptionCard({ option, label, selected, onClick }) {
   );
 }
 
-export function ResultCard({ score, percentage, subject, difficulty }) {
+export function ResultCard({ score, percentage, subject, examType, examName, difficulty }) {
   return (
     <div className={`${glassPanel} animate-scale-in p-6 sm:p-8`}>
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -244,6 +244,8 @@ export function ResultCard({ score, percentage, subject, difficulty }) {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <MetaChip label="Subject" value={subject} />
+            <MetaChip label="Exam Type" value={examType || "Not specified"} />
+            {examName ? <MetaChip label="Examination" value={examName} /> : null}
             <MetaChip label="Difficulty" value={difficulty} />
           </div>
         </div>

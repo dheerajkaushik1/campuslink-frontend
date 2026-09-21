@@ -51,10 +51,12 @@ export default function QuizResult() {
         score={result.score}
         percentage={result.percentage}
         subject={result.subject}
+        examType={result.examType}
+        examName={result.examName}
         difficulty={result.difficulty}
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatisticCard
           label="Correct Answers"
           value={result.correctAnswers}
@@ -77,6 +79,14 @@ export default function QuizResult() {
           helper="Overall quiz accuracy"
           icon="Target"
           accent="from-sky-500 to-violet-500"
+        />
+
+        <StatisticCard
+          label="Total Questions"
+          value={result.totalQuestions || result.correctAnswers + result.wrongAnswers}
+          helper="Questions in this quiz"
+          icon="FileQuestion"
+          accent="from-cyan-500 to-blue-500"
         />
       </div>
 

@@ -1,9 +1,18 @@
 import API from "../api/api";
 
-export const startQuiz = async (subject, difficulty) => {
+export const startQuiz = async ({
+    subject,
+    examType,
+    examName,
+    difficulty,
+    numberOfQuestions,
+}) => {
     const res = await API.post("/quiz/start", {
         subject,
+        examType,
+        examName: examName || null,
         difficulty,
+        numberOfQuestions,
     });
 
     return res.data;
