@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     ArrowRight,
     BrainCircuit,
@@ -14,6 +14,7 @@ import {
     MessageCircle,
     Phone,
     Camera,
+    X,
     Rocket,
     Server,
     Sparkles,
@@ -203,6 +204,8 @@ const glassCardClassName =
     "group relative overflow-hidden rounded-[2rem] border border-emerald-400/15 bg-slate-950/45 p-6 shadow-[0_18px_60px_rgba(2,12,27,0.45)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300/30 hover:shadow-[0_24px_80px_rgba(16,185,129,0.18)]";
 
 export default function MeetTheAdmin() {
+    const [isPhotoOpen, setIsPhotoOpen] = useState(false);
+
     useEffect(() => {
         const elements = document.querySelectorAll("[data-reveal]");
 
@@ -329,11 +332,18 @@ export default function MeetTheAdmin() {
                                                         <BrainCircuit className="h-5 w-5 text-emerald-300" />
                                                     </div>
                                                     <div className="absolute bottom-3 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full bg-emerald-400/15 blur-2xl" />
-                                                    <img
-                                                        src="/Admn.png"
-                                                        alt="Dheeraj Kaushik"
-                                                        className="relative z-10 h-44 w-44 rounded-full object-cover shadow-[0_16px_45px_rgba(8,145,178,0.28)]"
-                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setIsPhotoOpen(true)}
+                                                        aria-label="Enlarge Dheeraj Kaushik photo"
+                                                        className="relative z-10 rounded-full transition duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-300/80"
+                                                    >
+                                                        <img
+                                                            src="/Admn.png"
+                                                            alt="Dheeraj Kaushik"
+                                                            className="h-44 w-44 rounded-full object-cover shadow-[0_16px_45px_rgba(8,145,178,0.28)]"
+                                                        />
+                                                    </button>
                                                 </div>
                                             </div>
 
@@ -638,6 +648,35 @@ export default function MeetTheAdmin() {
                     </footer>
                 </div>
             </div>
+
+            {isPhotoOpen && (
+                <div
+                    className="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Enlarged admin photo"
+                    onClick={() => setIsPhotoOpen(false)}
+                >
+                    <div
+                        className="relative flex h-[min(78vh,48rem)] w-[min(82vw,64rem)] items-center justify-center rounded-[2rem] border border-emerald-300/30 bg-slate-950/95 p-3 shadow-[0_24px_100px_rgba(16,185,129,0.24)] animate-scale-in sm:p-5"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            onClick={() => setIsPhotoOpen(false)}
+                            aria-label="Close enlarged admin photo"
+                            className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-white/10 p-2 text-white transition hover:bg-white/20"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+                        <img
+                            src="/Admn.png"
+                            alt="Dheeraj Kaushik"
+                            className="max-h-full max-w-full rounded-[1.5rem] object-contain"
+                        />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

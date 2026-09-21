@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { BookOpen, BrainCircuit, FileText, Flag, Heart, House, ListChecks, LogOut, Menu, ShieldCheck, UserRound, X } from "lucide-react";
+import { BookOpen, BrainCircuit, FileText, Flag, Heart, ListChecks, LogOut, Menu, ShieldCheck, UserRound, X } from "lucide-react";
 import { notify } from "./alertBus";
 
 const primaryLinks = [
-    { to: "/", label: "Home", icon: House },
     { to: "/notes", label: "Notes", icon: BookOpen },
     { to: "/syllabus", label: "Syllabus", icon: FileText },
     { to: "/papers", label: "Papers", icon: ListChecks },
     { to: "/quiz", label: "Quiz", icon: BrainCircuit },
     { to: "/note-request", label: "Requests", icon: Flag },
+    { to: "/meet-the-admin", label: "Meet Admin", icon: UserRound },
 ];
 
 export default function Navbar() {
