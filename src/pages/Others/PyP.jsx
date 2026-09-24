@@ -5,6 +5,21 @@ import Loader from "../../components/Loader";
 import ResourceVisual from "../../components/ResourceVisual";
 import ResourceFilterSidebar from "../../components/ResourceFilterSidebar";
 import SEO from '../../components/SEO'
+import { Pencil } from "lucide-react";
+import EditResourceModal from "../../components/EditResourceModal";
+import { isAdminUser } from "../../components/adminAuth";
+import { notify } from "../../components/alertBus";
+
+const editFields = [
+    { key: "title", label: "Title" },
+    { key: "subject", label: "Subject" },
+    { key: "branch", label: "Branch" },
+    { key: "semester", label: "Semester" },
+    { key: "year", label: "Year" },
+    { key: "examType", label: "Exam Type" },
+    { key: "previewUrl", label: "Preview URL", type: "url" },
+    { key: "downloadUrl", label: "Download URL", type: "url" },
+];
 
 export default function PyP() {
     const CARDS_PER_PAGE = 9;
@@ -15,6 +30,8 @@ export default function PyP() {
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSemester, setSelectedSemester] = useState("");
+    const [editingPaper, setEditingPaper] = useState(null);
+    const isAdmin = isAdminUser();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -54,6 +71,13 @@ export default function PyP() {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const handleSavePaper = async (formState) => {
+        const res = await API.put(`/papers/${editingPaper._id}`, formState);
+        const updatedPaper = res.data?.paper || res.data;
+        setPapers((prev) => prev.map((paper) => paper._id === editingPaper._id ? { ...paper, ...updatedPaper } : paper));
+        notify("The paper was updated successfully.", "success", "Paper updated");
     };
 
     const handleSearch = async (searchQuery) => {
@@ -289,6 +313,18 @@ export default function PyP() {
                                             >
                                                 Download
                                             </button>
+
+                                            {isAdmin && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setEditingPaper(paper)}
+                                                    aria-label={`Edit ${paper.title}`}
+                                                    title="Edit paper"
+                                                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-(--border) bg-(--tertiary) text-(--primary-300) transition hover:border-(--primary-400) hover:bg-(--surface)"
+                                                >
+                                                    <Pencil className="h-4 w-4" />
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -297,7 +333,7 @@ export default function PyP() {
                     )}
 
                     {totalPages > 1 && (
-                        <div className="flex flex-wrap items-center justify-center gap-3">
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                             <button
                                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
@@ -353,6 +389,16 @@ export default function PyP() {
                     </div>
                 </div>
             </div>
+
+            {editingPaper && (
+                <EditResourceModal
+                    resource={editingPaper}
+                    resourceLabel="Paper"
+                    fields={editFields}
+                    onClose={() => setEditingPaper(null)}
+                    onSave={handleSavePaper}
+                />
+            )}
         </>
     );
 }

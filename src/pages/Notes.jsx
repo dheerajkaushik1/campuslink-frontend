@@ -5,6 +5,18 @@ import ResourceVisual from "../components/ResourceVisual";
 import ResourceFilterSidebar from "../components/ResourceFilterSidebar";
 import { useNavigate } from "react-router-dom";
 import SEO from '../components/SEO'
+import { Pencil } from "lucide-react";
+import EditResourceModal from "../components/EditResourceModal";
+import { isAdminUser } from "../components/adminAuth";
+import { notify } from "../components/alertBus";
+
+const editFields = [
+    { key: "title", label: "Title" },
+    { key: "subject", label: "Subject" },
+    { key: "description", label: "Description", type: "textarea", rows: 4, required: false },
+    { key: "previewUrl", label: "Preview URL", type: "url" },
+    { key: "downloadUrl", label: "Download URL", type: "url" },
+];
 
 export default function Notes() {
     const CARDS_PER_PAGE = 9;
@@ -17,6 +29,8 @@ export default function Notes() {
     const [currentPage, setCurrentPage] = useState(1);
     const [favoriteIds, setFavoriteIds] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState("");
+    const [editingNote, setEditingNote] = useState(null);
+    const isAdmin = isAdminUser();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -101,6 +115,13 @@ export default function Notes() {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const handleSaveNote = async (formState) => {
+        const res = await API.put(`/notes/${editingNote._id}`, formState);
+        const updatedNote = res.data?.note || res.data;
+        setNotes((prev) => prev.map((note) => note._id === editingNote._id ? { ...note, ...updatedNote } : note));
+        notify("The note was updated successfully.", "success", "Note updated");
     };
 
     const handleSearch = async (query) => {
@@ -376,6 +397,18 @@ export default function Notes() {
                                                     Download
                                                 </button>
 
+                                                {isAdmin && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditingNote(note)}
+                                                        aria-label={`Edit ${note.title}`}
+                                                        title="Edit note"
+                                                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-(--border) bg-(--tertiary) text-(--primary-300) transition hover:border-(--primary-400) hover:bg-(--surface)"
+                                                    >
+                                                        <Pencil className="h-4 w-4" />
+                                                    </button>
+                                                )}
+
                                             </div>
 
                                         </div>
@@ -386,7 +419,7 @@ export default function Notes() {
                     )}
 
                     {totalPages > 1 && (
-                        <div className="flex flex-wrap items-center justify-center gap-3">
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
 
                             <button
                                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -447,6 +480,16 @@ export default function Notes() {
                     </div>
                 </div>
             </div>
+
+            {editingNote && (
+                <EditResourceModal
+                    resource={editingNote}
+                    resourceLabel="Note"
+                    fields={editFields}
+                    onClose={() => setEditingNote(null)}
+                    onSave={handleSaveNote}
+                />
+            )}
 
         </>
     )

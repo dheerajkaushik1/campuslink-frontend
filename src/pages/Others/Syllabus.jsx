@@ -4,6 +4,18 @@ import Loader from "../../components/Loader";
 import ResourceVisual from "../../components/ResourceVisual";
 import { useNavigate } from "react-router-dom";
 import SEO from '../../components/SEO'
+import { Pencil } from "lucide-react";
+import EditResourceModal from "../../components/EditResourceModal";
+import { isAdminUser } from "../../components/adminAuth";
+import { notify } from "../../components/alertBus";
+
+const editFields = [
+    { key: "subject", label: "Subject" },
+    { key: "branch", label: "Branch" },
+    { key: "semester", label: "Semester" },
+    { key: "previewUrl", label: "Preview URL", type: "url" },
+    { key: "downloadUrl", label: "Download URL", type: "url" },
+];
 
 export default function Syllabus() {
     const CARDS_PER_PAGE = 9;
@@ -13,6 +25,8 @@ export default function Syllabus() {
     const [loadingSyllabi, setLoadingSyllabi] = useState(false);
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [editingSyllabus, setEditingSyllabus] = useState(null);
+    const isAdmin = isAdminUser();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -52,6 +66,13 @@ export default function Syllabus() {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const handleSaveSyllabus = async (formState) => {
+        const res = await API.put(`/syllabus/${editingSyllabus._id}`, formState);
+        const updatedSyllabus = res.data?.syllabus || res.data;
+        setSyllabi((prev) => prev.map((syllabus) => syllabus._id === editingSyllabus._id ? { ...syllabus, ...updatedSyllabus } : syllabus));
+        notify("The syllabus was updated successfully.", "success", "Syllabus updated");
     };
 
     const handleSearch = async (searchQuery) => {
@@ -246,6 +267,18 @@ export default function Syllabus() {
                                                 >
                                                     Download
                                                 </button>
+
+                                                {isAdmin && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setEditingSyllabus(syllabus)}
+                                                        aria-label={`Edit ${syllabus.subject} syllabus`}
+                                                        title="Edit syllabus"
+                                                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-(--border) bg-(--tertiary) text-(--primary-300) transition hover:border-(--primary-400) hover:bg-(--surface)"
+                                                    >
+                                                        <Pencil className="h-4 w-4" />
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -309,6 +342,16 @@ export default function Syllabus() {
                     </div>
                 </div>
             </div>
+
+            {editingSyllabus && (
+                <EditResourceModal
+                    resource={editingSyllabus}
+                    resourceLabel="Syllabus"
+                    fields={editFields}
+                    onClose={() => setEditingSyllabus(null)}
+                    onSave={handleSaveSyllabus}
+                />
+            )}
 
         </>
     );
